@@ -21,6 +21,7 @@ import {
   Hotel
 } from 'lucide-react';
 import { hotelService } from '../../services/hotelService';
+import { tasksForRole } from '../../config/roleAccess';
 
 export const DashboardView: React.FC = () => {
   const { 
@@ -33,12 +34,14 @@ export const DashboardView: React.FC = () => {
     setIsAiModalOpen,
     setIsDemoTourOpen,
     acceptTask,
-    completeTask
+    completeTask,
+    currentUserRole
   } = useApp();
 
   const pendingRequests = requests.filter(r => r.status === 'Pending' || r.status === 'In Progress');
-  const pendingTasks = tasks.filter(t => t.status !== 'COMPLETED');
-  const departmentWorkloads = hotelService.calculateDepartmentWorkload(tasks, staff);
+  const visibleTasks = tasksForRole(tasks, currentUserRole);
+  const pendingTasks = visibleTasks.filter(t => t.status !== 'COMPLETED');
+  const departmentWorkloads = hotelService.calculateDepartmentWorkload(visibleTasks, staff);
 
   const kpis = [
     {

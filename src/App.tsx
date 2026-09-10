@@ -20,15 +20,31 @@ import { MessagesUniboxView } from './components/messages/MessagesUniboxView';
 import { AnalyticsView } from './components/analytics/AnalyticsView';
 import { HotelKnowledgeView } from './components/knowledge/HotelKnowledgeView';
 import { SettingsView } from './components/settings/SettingsView';
+import { canAccessTab, ROLE_HOME } from './config/roleAccess';
+import { GuestConcierge } from './components/guest/GuestConcierge';
+
+const getGuestRoomToken = (): string | null => {
+  const match = window.location.pathname.match(/^\/guest\/([^/]+)\/?$/i);
+  return match ? decodeURIComponent(match[1]) : null;
+};
 
 const MainAppContent: React.FC = () => {
-  const { isLoggedIn, currentTab } = useApp();
+  const { isLoggedIn, currentTab, currentUserRole, setCurrentTab } = useApp();
+
+  React.useEffect(() => {
+    if (currentTab !== 'landing' && !canAccessTab(currentUserRole, currentTab)) {
+      setCurrentTab(ROLE_HOME[currentUserRole]);
+    }
+  }, [currentTab, currentUserRole, setCurrentTab]);
 
   if (!isLoggedIn) {
     return <LandingPage />;
   }
 
   const renderActiveTab = () => {
+    if (!canAccessTab(currentUserRole, currentTab)) {
+      return <DashboardView />;
+    }
     switch (currentTab) {
       case 'dashboard':
         return <DashboardView />;
@@ -84,6 +100,12 @@ const MainAppContent: React.FC = () => {
 };
 
 export default function App() {
+  const guestRoomToken = getGuestRoomToken();
+
+  if (window.location.pathname.toLowerCase().startsWith('/guest/')) {
+    return <GuestConcierge roomToken={guestRoomToken} />;
+  }
+
   return (
     <AppProvider>
       <MainAppContent />

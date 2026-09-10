@@ -192,7 +192,7 @@ export const SettingsView: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-slate-500 mt-1">{s.role} • {s.department}</p>
                 <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-400 font-mono">
-                  <span>Shift: {s.shift}</span>
+                  <span>Shift: {s.shiftStart} - {s.shiftEnd}</span>
                   <span>⭐ {s.rating}</span>
                 </div>
               </div>

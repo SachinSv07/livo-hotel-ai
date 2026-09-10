@@ -34,6 +34,7 @@ import {
 } from '../data/mockData';
 import { aiService, AiParsedIntent } from '../services/aiService';
 import { taskService } from '../services/taskService';
+import { requestService } from '../services/requestService';
 import confetti from 'canvas-confetti';
 
 export type NavTab = 
@@ -56,6 +57,20 @@ export interface Toast {
   message?: string;
   type: 'success' | 'info' | 'warning' | 'error';
 }
+
+const taskStatusForRequest = (status: RequestStatus): TaskStatus => {
+  switch (status) {
+    case 'In Progress':
+      return 'IN PROGRESS';
+    case 'Escalated':
+      return 'ESCALATED';
+    case 'Completed':
+    case 'Cancelled':
+      return 'COMPLETED';
+    default:
+      return 'NEW';
+  }
+};
 
 interface AppContextType {
   // Navigation & User
@@ -217,6 +232,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('lance_ai_config', JSON.stringify(aiConfig));
   }, [staff, requests, tasks, opportunities, threads, teamMessages, knowledge, notifications, aiLogs, aiConfig]);
 
+  useEffect(() => {
+    if (!requestService.isConfigured) return;
+
+    let isCancelled = false;
+
+    void requestService.fetchRequests()
+      .then(remoteRequests => {
+        if (!isCancelled) {
+          setRequests(remoteRequests);
+          setTasks([]);
+          remoteRequests.forEach(syncTaskForRequest);
+        }
+      })
+      .catch(error => {
+        console.error('Unable to load requests from Supabase.', error);
+        showToast('Supabase Sync Unavailable', 'Showing locally stored requests.', 'warning');
+      });
+
+    const channel = requestService.subscribe(
+      request => {
+        setRequests(prev => [request, ...prev.filter(item => item.id !== request.id)]);
+        syncTaskForRequest(request);
+      },
+      request => {
+        setRequests(prev => prev.map(item => item.id === request.id ? request : item));
+        syncTaskForRequest(request);
+      },
+      requestId => {
+        setRequests(prev => prev.filter(item => item.id !== requestId));
+        setTasks(prev => prev.filter(task => task.requestId !== requestId));
+      }
+    );
+
+    return () => {
+      isCancelled = true;
+      requestService.removeSubscription(channel);
+    };
+  }, []);
+
   // Toast Helpers
   const showToast = (title: string, message?: string, type: 'success' | 'info' | 'warning' | 'error' = 'success') => {
     const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
@@ -228,6 +282,44 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const removeToast = (id: string) => {
     setToasts(prev => prev.filter(t => t.id !== id));
+  };
+
+  const syncTaskForRequest = (request: GuestRequest) => {
+    setTasks(prev => {
+      const existingTask = prev.find(task => task.requestId === request.id);
+      const assignedStaff = existingTask
+        ? staff.find(member => member.id === existingTask.assignedToStaffId)
+        : taskService.findBestAvailableStaff(request.department, staff);
+      const nextTask: TaskItem = {
+        id: existingTask?.id || `TASK-${request.id}`,
+        requestId: request.id,
+        title: request.request,
+        description: request.details || `${request.request} requested for Room ${request.roomNumber}`,
+        roomNumber: request.roomNumber,
+        guestName: request.guestName,
+        department: request.department,
+        priority: request.priority,
+        status: taskStatusForRequest(request.status),
+        assignedToStaffId: existingTask?.assignedToStaffId || assignedStaff?.id || 'staff-1',
+        assignedToStaffName: existingTask?.assignedToStaffName || assignedStaff?.name || 'Auto-Routing',
+        createdAt: request.createdAt,
+        acceptedAt: existingTask?.acceptedAt,
+        completedAt: request.completedAt || existingTask?.completedAt,
+        slaMinutes: request.slaMinutes,
+        timeRemainingMins: existingTask?.timeRemainingMins ?? request.slaMinutes,
+        notes: existingTask?.notes || [{
+          id: `note-${request.id}`,
+          staffName: 'Receptionist AI',
+          text: 'Created from Supabase guest request.',
+          timestamp: request.createdAt
+        }],
+        resolution: existingTask?.resolution
+      };
+
+      return existingTask
+        ? prev.map(task => task.requestId === request.id ? nextTask : task)
+        : [nextTask, ...prev];
+    });
   };
 
   // Task Transitions
@@ -247,6 +339,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const task = tasks.find(t => t.id === taskId);
     if (task?.requestId) {
       setRequests(prev => prev.map(r => r.id === task.requestId ? { ...r, status: 'In Progress' } : r));
+      void requestService.updateRequestStatus(task.requestId, 'In Progress').catch(error => {
+        console.error('Unable to sync request status to Supabase.', error);
+      });
     }
 
     showToast('Task Accepted', `Task #${taskId} is now In Progress.`, 'info');
@@ -307,6 +402,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const task = tasks.find(t => t.id === taskId);
     if (task?.requestId) {
       setRequests(prev => prev.map(r => r.id === task.requestId ? { ...r, status: 'Escalated', priority: 'High' } : r));
+      void requestService.updateRequestStatus(task.requestId, 'Escalated', 'High').catch(error => {
+        console.error('Unable to sync request escalation to Supabase.', error);
+      });
     }
 
     // Add notification
@@ -358,6 +456,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
         return r;
       }));
+      void requestService.updateRequestStatus(task.requestId, 'Completed').catch(error => {
+        console.error('Unable to sync completed request to Supabase.', error);
+      });
     }
 
     // Trigger celebration confetti
@@ -397,7 +498,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Guest Requests
   const createGuestRequest = (reqData: Partial<GuestRequest>) => {
-    const id = `REQ-${1050 + requests.length}`;
+    const id = crypto.randomUUID();
     const newReq: GuestRequest = {
       id,
       guestId: reqData.guestId || 'guest-1',
@@ -418,6 +519,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     setRequests(prev => [newReq, ...prev]);
+
+    void requestService.insertRequest(newReq)
+      .then(savedRequest => {
+        setRequests(prev => [savedRequest, ...prev.filter(request => request.id !== savedRequest.id)]);
+      })
+      .catch(error => {
+        console.error('Unable to save request to Supabase.', error);
+        showToast('Supabase Save Failed', 'The request remains available locally.', 'warning');
+      });
 
     // Create corresponding task on Lance Pad
     const bestStaff = taskService.findBestAvailableStaff(newReq.department, staff);
@@ -453,6 +563,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const updateRequestStatus = (reqId: string, status: RequestStatus) => {
     setRequests(prev => prev.map(r => r.id === reqId ? { ...r, status, updatedAt: 'Just now' } : r));
+    setTasks(prev => prev.map(task => task.requestId === reqId
+      ? {
+          ...task,
+          status: taskStatusForRequest(status),
+          completedAt: status === 'Completed'
+            ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : task.completedAt
+        }
+      : task
+    ));
+    void requestService.updateRequestStatus(reqId, status).catch(error => {
+      console.error('Unable to sync request status to Supabase.', error);
+      showToast('Supabase Sync Failed', 'The status change remains available locally.', 'warning');
+    });
   };
 
   // Sales Opportunities

@@ -13,6 +13,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { TaskItem, Department, TaskStatus } from '../../types';
+import { ROLE_DEPARTMENT } from '../../config/roleAccess';
 
 export const TasksView: React.FC = () => {
   const { 
@@ -21,14 +22,18 @@ export const TasksView: React.FC = () => {
     acceptTask, 
     completeTask, 
     escalateTask, 
-    setCurrentTab 
+    setCurrentTab,
+    currentUserRole
   } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'All'>('All');
   const [deptFilter, setDeptFilter] = useState<Department | 'All'>('All');
 
-  const filteredTasks = tasks.filter(task => {
+  const roleDepartment = ROLE_DEPARTMENT[currentUserRole];
+  const visibleTasks = roleDepartment ? tasks.filter(task => task.department === roleDepartment) : tasks;
+
+  const filteredTasks = visibleTasks.filter(task => {
     const matchesSearch = 
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       task.roomNumber.includes(searchQuery) ||
@@ -51,7 +56,7 @@ export const TasksView: React.FC = () => {
             </div>
             <h1 className="text-xl font-bold text-slate-900 tracking-tight">Staff Operations Task Central</h1>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-              {tasks.length} Tasks
+              {visibleTasks.length} Tasks
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">

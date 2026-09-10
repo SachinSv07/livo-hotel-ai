@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp, NavTab } from '../../context/AppContext';
+import { ROLE_ACCESS, tasksForRole } from '../../config/roleAccess';
 import { 
   LayoutDashboard, 
   Bot, 
@@ -43,11 +44,11 @@ export const Sidebar: React.FC = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const pendingRequestsCount = requests.filter(r => r.status === 'Pending' || r.status === 'In Progress').length;
-  const activeTasksCount = tasks.filter(t => t.status !== 'COMPLETED').length;
+  const activeTasksCount = tasksForRole(tasks, currentUserRole).filter(t => t.status !== 'COMPLETED').length;
   const unreadMessagesCount = threads.reduce((acc, t) => acc + t.unreadCount, 0);
   const activeLeadsCount = opportunities.filter(o => o.stage === 'New' || o.stage === 'Qualified').length;
 
-  const mainNavItems: NavItem[] = [
+  const mainNavItems: NavItem[] = ([
     { tab: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { 
       tab: 'receptionist', 
@@ -102,7 +103,7 @@ export const Sidebar: React.FC = () => {
     { tab: 'analytics', label: 'Analytics', icon: BarChart3 },
     { tab: 'knowledge', label: 'Hotel Knowledge', icon: BookOpen },
     { tab: 'settings', label: 'Settings', icon: Settings },
-  ];
+  ] as NavItem[]).filter(item => ROLE_ACCESS[currentUserRole].includes(item.tab));
 
   const handleNavClick = (tab: NavTab) => {
     setCurrentTab(tab);
@@ -146,7 +147,7 @@ export const Sidebar: React.FC = () => {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-base tracking-tight text-white font-['Outfit',sans-serif]">
-                  LANCE
+                  LIVO
                 </span>
                 <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
                   AI OS

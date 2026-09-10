@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { 
   Bot, 
@@ -23,92 +23,128 @@ import {
   Star
 } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../../data/mockData';
-import { guestService } from '../../services/guestService';
-import { aiService } from '../../services/aiService';
+import { conversationService, GuestConversation, GuestConversationMessage } from '../../services/conversationService';
+
+type ChatMessage = {
+  sender: 'guest' | 'ai';
+  text: string;
+  time: string;
+  intent?: string;
+  dept?: string;
+  sla?: string;
+};
+
+const formatConversationTime = (seconds?: number) => {
+  if (typeof seconds !== 'number') return 'Post-call';
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = String(seconds % 60).padStart(2, '0');
+  return `${minutes}:${remainingSeconds}`;
+};
+
+const toChatHistory = (transcript: GuestConversationMessage[]): ChatMessage[] => {
+  return transcript
+    .filter(message => Boolean(message.message?.trim()))
+    .map(message => ({
+      sender: message.role === 'user' ? 'guest' : 'ai',
+      text: message.message!.trim(),
+      time: formatConversationTime(message.time_in_call_secs)
+    }));
+};
 
 export const ReceptionistAiView: React.FC = () => {
   const { 
-    guests, 
     requests, 
     currentLanguage, 
     setCurrentLanguage, 
-    executeAiAssistantPrompt,
     setCurrentTab,
-    escalateRequest
+    updateRequestStatus
   } = useApp();
 
-  const [selectedGuestId, setSelectedGuestId] = useState<string>(guests[0]?.id || 'GST-101');
-  const [activeChannel, setActiveChannel] = useState<'WhatsApp' | 'Phone' | 'SMS' | 'Web' | 'Email'>('WhatsApp');
-  const [inputText, setInputText] = useState('');
-  const [conversationHistory, setConversationHistory] = useState([
-    {
-      sender: 'guest',
-      text: 'Hi, we are in Room 402. Could we get 2 extra bath towels and dental kits please?',
-      time: '10:41 AM'
-    },
-    {
-      sender: 'ai',
-      text: 'Good morning Mr. Rahul Krishnan! Absolutely. I have logged your request and our housekeeping team has been dispatched with 2 luxury bath towels and dental kits to Room 402. Estimated delivery is within 8 minutes.',
-      time: '10:41 AM',
-      intent: 'Housekeeping / Towels & Toiletries',
-      dept: 'Housekeeping',
-      sla: '10 Mins'
-    }
-  ]);
-  const [isAiTyping, setIsAiTyping] = useState(false);
+  const [conversations, setConversations] = useState<GuestConversation[]>([]);
+  const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
+  const [conversationHistory, setConversationHistory] = useState<ChatMessage[]>([]);
   const [lastParsedIntent, setLastParsedIntent] = useState<any>({
-    intentCategory: 'Housekeeping / Linen',
-    department: 'Housekeeping',
-    roomNumber: '402',
-    priority: 'Normal',
-    confidence: 0.98,
-    action: 'Dispatched TASK-501 to Priya Sharma on Lance Pad'
+    intentCategory: 'No conversation selected',
+    department: '—',
+    roomNumber: '—',
+    priority: '—',
+    confidence: 0,
+    action: 'Waiting for an ElevenLabs conversation'
   });
 
-  const currentGuest = guests?.find(g => g.id === selectedGuestId) || guests?.[0];
-  const guestRequests = currentGuest 
-    ? requests.filter(r => r.guestId === currentGuest.id || r.roomNumber === currentGuest.roomNumber)
+  const selectedConversation = conversations.find(
+    conversation => conversation.id === selectedConversationId
+  ) || null;
+
+  useEffect(() => {
+    if (!conversationService.isConfigured) return;
+
+    let isCancelled = false;
+
+    void conversationService.fetchConversations()
+      .then(loadedConversations => {
+        if (isCancelled) return;
+        setConversations(loadedConversations);
+        setSelectedConversationId(loadedConversations[0]?.id || null);
+      })
+      .catch(error => {
+        console.error('Unable to load ElevenLabs conversations.', error);
+      });
+
+    const channel = conversationService.subscribe(
+      conversation => {
+        setConversations(prev => [conversation, ...prev.filter(item => item.id !== conversation.id)]);
+        setSelectedConversationId(conversation.id);
+      },
+      conversation => {
+        setConversations(prev => prev.map(item => item.id === conversation.id ? conversation : item));
+      }
+    );
+
+    return () => {
+      isCancelled = true;
+      conversationService.removeSubscription(channel);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedConversation) {
+      setConversationHistory([]);
+      setLastParsedIntent({
+        intentCategory: 'No conversation selected',
+        department: '—',
+        roomNumber: '—',
+        priority: '—',
+        confidence: 0,
+        action: 'Waiting for an ElevenLabs conversation'
+      });
+      return;
+    }
+
+    const loadedHistory = toChatHistory(selectedConversation.transcript);
+    setConversationHistory(loadedHistory);
+
+    setLastParsedIntent(prev => ({
+      ...prev,
+      intentCategory: selectedConversation.request || 'Guest service conversation',
+      department: selectedConversation.department || prev.department,
+      priority: selectedConversation.priority || prev.priority,
+      roomNumber: selectedConversation.roomNumber,
+      confidence: null,
+      action: selectedConversation.request
+        ? `Request created: ${selectedConversation.request}`
+        : 'Conversation completed'
+    }));
+  }, [selectedConversation]);
+
+  const activeRoomNumber = selectedConversation?.roomNumber || '—';
+  const guestRequests = selectedConversation
+    ? requests.filter(r => r.roomNumber === activeRoomNumber)
     : [];
-
-  const preferences = currentGuest?.specialPreferences || (currentGuest?.notes ? [currentGuest.notes] : []);
-
-  const handleSendMessage = (textToSend?: string) => {
-    const text = textToSend || inputText;
-    if (!text.trim()) return;
-
-    // Add guest message
-    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setConversationHistory(prev => [...prev, { sender: 'guest', text, time: now }]);
-    setInputText('');
-    setIsAiTyping(true);
-
-    setTimeout(() => {
-      const parsed = aiService.parseGuestOrSalesInput(text, currentLanguage);
-      setLastParsedIntent(parsed);
-
-      setConversationHistory(prev => [
-        ...prev,
-        {
-          sender: 'ai',
-          text: parsed.responseMessage,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          intent: parsed.intentCategory,
-          dept: parsed.department,
-          sla: parsed.priority === 'High' ? '5 Mins' : '15 Mins'
-        }
-      ]);
-      setIsAiTyping(false);
-    }, 600);
-  };
-
-  const handleQuickPrompt = (prompt: string) => {
-    setInputText(prompt);
-    handleSendMessage(prompt);
-  };
 
   const handleEscalateToManager = () => {
     if (guestRequests.length > 0) {
-      escalateRequest(guestRequests[0].id, 'Guest requested human supervisor intervention');
+      updateRequestStatus(guestRequests[0].id, 'Escalated');
     }
   };
 
@@ -127,26 +163,10 @@ export const ReceptionistAiView: React.FC = () => {
             </span>
           </div>
           <p className="text-xs text-slate-300 mt-1">
-            Autonomous multi-channel guest conversational agent with Opera PMS real-time verification and automated task dispatching.
+            Autonomous guest conversational agent with Opera PMS real-time verification and automated task dispatching.
           </p>
         </div>
 
-        {/* Channel Switcher */}
-        <div className="flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
-          {(['WhatsApp', 'Phone', 'SMS', 'Web', 'Email'] as const).map(channel => (
-            <button
-              key={channel}
-              onClick={() => setActiveChannel(channel)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeChannel === channel
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
-              }`}
-            >
-              {channel}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Main 3-Column Layout: Guests & PMS (Left), Interactive Chat (Center), AI Intent & PMS Sync (Right) */}
@@ -161,67 +181,58 @@ export const ReceptionistAiView: React.FC = () => {
               </span>
             </div>
 
-            {/* Guest Selector Dropdown */}
+            {/* Supabase Conversation Selector */}
             <div className="mb-4">
-              <label className="block text-[11px] font-semibold text-slate-500 mb-1">Select In-House Guest:</label>
+              <label className="block text-[11px] font-semibold text-slate-500 mb-1">Select Supabase conversation:</label>
               <select
-                value={selectedGuestId}
-                onChange={e => setSelectedGuestId(e.target.value)}
+                value={selectedConversationId || ''}
+                onChange={e => setSelectedConversationId(e.target.value || null)}
                 className="w-full text-xs font-semibold p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-hidden focus:ring-1 focus:ring-teal-500"
+                disabled={conversations.length === 0}
               >
-                {guests.map(g => (
-                  <option key={g.id} value={g.id}>
-                    Room {g.roomNumber} – {g.name} ({g.vipTier})
+                {conversations.length === 0 ? (
+                  <option value="">No conversations available</option>
+                ) : conversations.map(conversation => (
+                  <option key={conversation.id} value={conversation.id}>
+                    Room {conversation.roomNumber} - {conversation.request || 'Guest conversation'}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* Current Guest PMS Card */}
-            {currentGuest && (
+            {/* Selected Conversation Details */}
+            {selectedConversation ? (
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2.5 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-900 text-sm">{currentGuest.name}</span>
-                  {currentGuest.vipStatus && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
-                      {currentGuest.vipTier || 'VIP'}
-                    </span>
-                  )}
+                  <span className="font-bold text-slate-900 text-sm">Room {selectedConversation.roomNumber}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    {selectedConversation.status}
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600 pt-1">
+                <div className="space-y-2 text-[11px] text-slate-600 pt-1">
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Room Number</span>
-                    <span className="font-mono font-bold text-slate-900">#{currentGuest.roomNumber} ({currentGuest.roomType || 'Deluxe Room'})</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">ElevenLabs conversation</span>
+                    <span className="font-mono font-bold text-slate-900 break-all">{selectedConversation.elevenlabsConversationId}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Stay Dates</span>
-                    <span className="font-semibold text-slate-800">{currentGuest.checkInDate || currentGuest.checkIn} - {currentGuest.checkOutDate || currentGuest.checkOut}</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Request</span>
+                    <span className="font-semibold text-slate-800">{selectedConversation.request || 'No request extracted'}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Folio Balance</span>
-                    <span className="font-mono font-bold text-emerald-700">₹{(currentGuest.folioBalance ?? 0).toLocaleString('en-IN')} (Paid)</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Department & priority</span>
+                    <span className="font-semibold text-slate-800">{selectedConversation.department || '—'} · {selectedConversation.priority || '—'}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Loyalty Points</span>
-                    <span className="font-mono font-semibold text-slate-800">{currentGuest.loyaltyPoints ?? 0} pts</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Call duration</span>
+                    <span className="font-mono font-semibold text-slate-800">{selectedConversation.callDurationSecs ?? 0}s</span>
                   </div>
                 </div>
-
-                {preferences.length > 0 && (
-                  <div className="pt-2 border-t border-slate-200">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Preferences & Notes:</span>
-                    <div className="flex flex-wrap gap-1">
-                      {preferences.map((p, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 bg-white border border-slate-200 rounded text-slate-700 font-medium">
-                          {p}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
+            ) : (
+              <p className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-400">
+                No ElevenLabs conversations have been received yet.
+              </p>
             )}
 
             {/* Escalation Button */}
@@ -277,7 +288,7 @@ export const ReceptionistAiView: React.FC = () => {
               </div>
               <div>
                 <p className="text-xs font-bold leading-tight">Receptionist AI Agent</p>
-                <p className="text-[10px] text-slate-400">Serving {currentGuest.name} (Room {currentGuest.roomNumber}) via {activeChannel}</p>
+                <p className="text-[10px] text-slate-400">Room {activeRoomNumber} · Supabase transcript</p>
               </div>
             </div>
 
@@ -286,37 +297,18 @@ export const ReceptionistAiView: React.FC = () => {
             </span>
           </div>
 
-          {/* Quick Presets Bar */}
-          <div className="p-2 bg-slate-50 border-b border-slate-200 overflow-x-auto flex gap-1.5 scrollbar-none">
-            <button
-              onClick={() => handleQuickPrompt('I need 2 extra towels and bathrobes in Room 402.')}
-              className="px-2.5 py-1 bg-white border border-slate-200 hover:border-teal-400 rounded-lg text-[11px] font-semibold text-slate-700 whitespace-nowrap"
-            >
-              Extra Towels
-            </button>
-            <button
-              onClick={() => handleQuickPrompt('The AC is making noise and not cooling.')}
-              className="px-2.5 py-1 bg-white border border-slate-200 hover:border-rose-400 rounded-lg text-[11px] font-semibold text-slate-700 whitespace-nowrap"
-            >
-              AC Issue (Urgent)
-            </button>
-            <button
-              onClick={() => handleQuickPrompt('Can I get late checkout until 2 PM tomorrow?')}
-              className="px-2.5 py-1 bg-white border border-slate-200 hover:border-purple-400 rounded-lg text-[11px] font-semibold text-slate-700 whitespace-nowrap"
-            >
-              Late Checkout
-            </button>
-            <button
-              onClick={() => handleQuickPrompt('What time does the rooftop swimming pool close?')}
-              className="px-2.5 py-1 bg-white border border-slate-200 hover:border-blue-400 rounded-lg text-[11px] font-semibold text-slate-700 whitespace-nowrap"
-            >
-              Pool Timings
-            </button>
+          {/* Transcript source marker */}
+          <div className="px-3 py-2 bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-500">
+            Post-call transcript from ElevenLabs · Read-only
           </div>
 
           {/* Messages Feed */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/40">
-            {conversationHistory.map((msg, i) => (
+            {conversationHistory.length === 0 ? (
+              <div className="h-full flex items-center justify-center text-center text-xs text-slate-400">
+                Select a Supabase conversation to view its transcript.
+              </div>
+            ) : conversationHistory.map((msg, i) => (
               <div
                 key={i}
                 className={`flex flex-col ${msg.sender === 'guest' ? 'items-end' : 'items-start'}`}
@@ -348,37 +340,11 @@ export const ReceptionistAiView: React.FC = () => {
               </div>
             ))}
 
-            {isAiTyping && (
-              <div className="flex items-center gap-2 p-3 bg-white border border-slate-200 rounded-2xl w-fit shadow-2xs">
-                <Bot className="w-4 h-4 text-teal-600 animate-spin" />
-                <span className="text-xs text-slate-500 font-medium">Receptionist AI is thinking & checking PMS...</span>
-              </div>
-            )}
           </div>
 
-          {/* Input Box */}
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              handleSendMessage();
-            }}
-            className="p-3 bg-white border-t border-slate-200 flex items-center gap-2"
-          >
-            <input
-              type="text"
-              value={inputText}
-              onChange={e => setInputText(e.target.value)}
-              placeholder={`Type a guest request for Room ${currentGuest.roomNumber}...`}
-              className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-teal-500"
-            />
-            <button
-              type="submit"
-              disabled={!inputText.trim() || isAiTyping}
-              className="p-2.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white rounded-xl transition-all shadow-xs"
-            >
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
+          <div className="p-3 bg-white border-t border-slate-200 text-[11px] text-slate-500">
+            New guest conversations arrive here after the ElevenLabs post-call webhook is processed.
+          </div>
         </div>
 
         {/* Right Column: AI Intent Extraction & Dispatch Status (4 Cols) */}
@@ -390,7 +356,7 @@ export const ReceptionistAiView: React.FC = () => {
                 <span>Live Intent Analysis</span>
               </h3>
               <span className="text-[10px] font-mono text-teal-700 bg-teal-50 px-2 py-0.5 rounded font-bold">
-                Confidence: 98%
+                {selectedConversation ? 'Recorded from Supabase' : 'No conversation'}
               </span>
             </div>
 
@@ -434,7 +400,7 @@ export const ReceptionistAiView: React.FC = () => {
           {/* Active Tasks for this Room */}
           <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-              Dispatched Tasks for Room {currentGuest.roomNumber}
+              Dispatched Tasks for Room {activeRoomNumber}
             </h3>
             {guestRequests.length === 0 ? (
               <p className="text-xs text-slate-400 py-2">No active tasks for this room.</p>

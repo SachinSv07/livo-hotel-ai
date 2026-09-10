@@ -16,11 +16,13 @@ import {
 } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../../data/mockData';
 import { UserRole } from '../../types';
+import { ROLE_HOME, ROLE_DESCRIPTIONS } from '../../config/roleAccess';
 
 export const Header: React.FC = () => {
   const {
     currentUserRole,
     setCurrentUserRole,
+    setCurrentTab,
     currentLanguage,
     setCurrentLanguage,
     setIsSearchOpen,
@@ -206,7 +208,7 @@ export const Header: React.FC = () => {
             <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-xl py-2 z-50 text-xs animate-in fade-in slide-in-from-top-1">
               <div className="px-3.5 py-2 border-b border-slate-100">
                 <p className="font-bold text-slate-900">Signed in as {currentUserRole}</p>
-                <p className="text-[11px] text-slate-500">admin@lancehotel.com</p>
+                <p className="text-[11px] text-slate-500">{ROLE_DESCRIPTIONS[currentUserRole]}</p>
               </div>
 
               <div className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 tracking-wider">
@@ -218,6 +220,7 @@ export const Header: React.FC = () => {
                   key={role}
                   onClick={() => {
                     setCurrentUserRole(role);
+                    setCurrentTab(ROLE_HOME[role]);
                     setIsProfileMenuOpen(false);
                   }}
                   className={`w-full flex items-center justify-between px-3.5 py-1.5 text-left transition-colors ${

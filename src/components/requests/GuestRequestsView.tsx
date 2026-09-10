@@ -14,13 +14,15 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import { GuestRequest, Department, Priority } from '../../types';
+import { requestsForRole } from '../../config/roleAccess';
 
 export const GuestRequestsView: React.FC = () => {
   const { 
     requests, 
     createGuestRequest, 
     updateRequestStatus, 
-    setCurrentTab 
+    setCurrentTab,
+    currentUserRole
   } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +37,9 @@ export const GuestRequestsView: React.FC = () => {
   const [newDept, setNewDept] = useState<Department>('Housekeeping');
   const [newPriority, setNewPriority] = useState<Priority>('Normal');
 
-  const filteredRequests = requests.filter(req => {
+  const visibleRequests = requestsForRole(requests, currentUserRole);
+
+  const filteredRequests = visibleRequests.filter(req => {
     const matchesSearch = 
       req.request.toLowerCase().includes(searchQuery.toLowerCase()) ||
       req.roomNumber.includes(searchQuery) ||
@@ -73,7 +77,7 @@ export const GuestRequestsView: React.FC = () => {
             </div>
             <h1 className="text-xl font-bold text-slate-900 tracking-tight">Live Guest Requests Feed</h1>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
-              {requests.length} Total
+              {visibleRequests.length} Total
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">

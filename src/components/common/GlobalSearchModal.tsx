@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { guestService } from '../../services/guestService';
 import { hotelService } from '../../services/hotelService';
+import { tasksForRole } from '../../config/roleAccess';
 
 export const GlobalSearchModal: React.FC = () => {
   const { 
@@ -24,7 +25,8 @@ export const GlobalSearchModal: React.FC = () => {
     requests, 
     tasks, 
     opportunities, 
-    knowledge 
+    knowledge,
+    currentUserRole
   } = useApp();
 
   const [query, setQuery] = useState('');
@@ -63,7 +65,7 @@ export const GlobalSearchModal: React.FC = () => {
     r.roomNumber.includes(q) || 
     r.guestName.toLowerCase().includes(q)
   ).slice(0, 3) : [];
-  const matchingTasks = q ? tasks.filter(t =>
+  const matchingTasks = q ? tasksForRole(tasks, currentUserRole).filter(t =>
     t.title.toLowerCase().includes(q) ||
     t.roomNumber.includes(q) ||
     t.assignedToStaffName.toLowerCase().includes(q)

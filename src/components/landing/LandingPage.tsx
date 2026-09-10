@@ -70,7 +70,7 @@ export const LandingPage: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-white font-['Outfit',sans-serif]">
-                LANCE
+                LIVO
               </span>
               <span className="text-[11px] uppercase font-bold tracking-widest text-teal-400 block -mt-1">
                 Hotel Operations OS
@@ -500,7 +500,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <p className="mt-12 text-[11px] text-slate-600">
-            Lance – AI-Powered Hotel Operations Platform © 2026. Designed for modern luxury hospitality.
+            LIVO – AI-Powered Hotel Operations Platform © 2026. Designed for modern luxury hospitality.
           </p>
         </div>
       </footer>

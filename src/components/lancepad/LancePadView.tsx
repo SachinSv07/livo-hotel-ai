@@ -21,6 +21,7 @@ import {
   Radio
 } from 'lucide-react';
 import { TaskItem, Department, TaskStatus } from '../../types';
+import { ROLE_DEPARTMENT } from '../../config/roleAccess';
 
 export const LancePadView: React.FC = () => {
   const { 
@@ -31,7 +32,7 @@ export const LancePadView: React.FC = () => {
     acceptTask, 
     completeTask, 
     escalateTask,
-    currentUserRole 
+    currentUserRole
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'board' | 'chat'>('board');
@@ -52,7 +53,10 @@ export const LancePadView: React.FC = () => {
   ];
 
   // Filter tasks by active department
-  const filteredTasks = tasks.filter(task => {
+  const roleDepartment = ROLE_DEPARTMENT[currentUserRole];
+  const visibleTasks = roleDepartment ? tasks.filter(task => task.department === roleDepartment) : tasks;
+
+  const filteredTasks = visibleTasks.filter(task => {
     if (activeDepartmentFilter === 'All') return true;
     return task.department === activeDepartmentFilter;
   });
