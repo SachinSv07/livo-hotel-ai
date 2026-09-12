@@ -8,8 +8,14 @@ create table public.requests (
   created_at timestamp with time zone null default now(),
   acknowledged_at timestamp with time zone null,
   completed_at timestamp with time zone null,
+  sla_minutes integer null default 20,
+  estimated_delivery_mins integer null,
   constraint requests_pkey primary key (id)
 ) tablespace pg_default;
+
+-- Add these columns when upgrading an existing requests table.
+alter table public.requests add column if not exists sla_minutes integer null default 20;
+alter table public.requests add column if not exists estimated_delivery_mins integer null;
 
 alter table public.requests enable row level security;
 

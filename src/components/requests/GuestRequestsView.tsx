@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { GuestRequest, Department, Priority } from '../../types';
 import { requestsForRole } from '../../config/roleAccess';
+import { canPerform } from '../../config/permissions';
 
 export const GuestRequestsView: React.FC = () => {
   const { 
@@ -86,13 +87,13 @@ export const GuestRequestsView: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
+          {canPerform(currentUserRole, 'requests.create') && <button
             onClick={() => setIsNewModalOpen(true)}
             className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Manual Request</span>
-          </button>
+          </button>}
           <button
             onClick={() => setCurrentTab('receptionist')}
             className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
@@ -230,7 +231,7 @@ export const GuestRequestsView: React.FC = () => {
 
                     <td className="p-3.5 text-right">
                       <div className="flex items-center justify-end gap-1.5">
-                        {req.status === 'Pending' && (
+                        {req.status === 'Pending' && canPerform(currentUserRole, 'requests.update_status') && (
                           <button
                             onClick={() => updateRequestStatus(req.id, 'In Progress')}
                             className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[10px] font-bold"
@@ -238,7 +239,7 @@ export const GuestRequestsView: React.FC = () => {
                             Dispatch
                           </button>
                         )}
-                        {req.status === 'In Progress' && (
+                        {req.status === 'In Progress' && canPerform(currentUserRole, 'requests.update_status') && (
                           <button
                             onClick={() => updateRequestStatus(req.id, 'Completed')}
                             className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-bold"
@@ -246,13 +247,13 @@ export const GuestRequestsView: React.FC = () => {
                             Resolve
                           </button>
                         )}
-                        <button
+                        {canPerform(currentUserRole, 'tasks.escalate') && <button
                           onClick={() => updateRequestStatus(req.id, 'Escalated')}
                           className="p-1 text-rose-600 hover:bg-rose-50 rounded"
                           title="Escalate"
                         >
                           <ShieldAlert className="w-3.5 h-3.5" />
-                        </button>
+                        </button>}
                       </div>
                     </td>
                   </tr>

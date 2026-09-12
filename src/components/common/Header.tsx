@@ -32,6 +32,8 @@ export const Header: React.FC = () => {
     setIsDemoTourOpen,
     notifications,
     setIsLoggedIn,
+    signOut,
+    isAuthConfigured,
     resetAllData
   } = useApp();
 
@@ -211,29 +213,31 @@ export const Header: React.FC = () => {
                 <p className="text-[11px] text-slate-500">{ROLE_DESCRIPTIONS[currentUserRole]}</p>
               </div>
 
-              <div className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 tracking-wider">
-                Switch Role (Demo Mode)
-              </div>
+              {!isAuthConfigured && <>
+                <div className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 tracking-wider">
+                  Switch Role (Demo Mode)
+                </div>
 
-              {roles.map(role => (
-                <button
-                  key={role}
-                  onClick={() => {
-                    setCurrentUserRole(role);
-                    setCurrentTab(ROLE_HOME[role]);
-                    setIsProfileMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3.5 py-1.5 text-left transition-colors ${
-                    currentUserRole === role ? 'font-bold text-teal-700 bg-teal-50' : 'text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <ShieldCheck className={`w-3.5 h-3.5 ${currentUserRole === role ? 'text-teal-600' : 'text-slate-400'}`} />
-                    <span>{role}</span>
-                  </span>
-                  {currentUserRole === role && <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded">Active</span>}
-                </button>
-              ))}
+                {roles.map(role => (
+                  <button
+                    key={role}
+                    onClick={() => {
+                      setCurrentUserRole(role);
+                      setCurrentTab(ROLE_HOME[role]);
+                      setIsProfileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-1.5 text-left transition-colors ${
+                      currentUserRole === role ? 'font-bold text-teal-700 bg-teal-50' : 'text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <ShieldCheck className={`w-3.5 h-3.5 ${currentUserRole === role ? 'text-teal-600' : 'text-slate-400'}`} />
+                      <span>{role}</span>
+                    </span>
+                    {currentUserRole === role && <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded">Active</span>}
+                  </button>
+                ))}
+              </>}
 
               <div className="border-t border-slate-100 my-1"></div>
 
@@ -250,13 +254,17 @@ export const Header: React.FC = () => {
 
               <button
                 onClick={() => {
-                  setIsLoggedIn(false);
+                  if (isAuthConfigured) {
+                    void signOut();
+                  } else {
+                    setIsLoggedIn(false);
+                  }
                   setIsProfileMenuOpen(false);
                 }}
                 className="w-full flex items-center gap-2 px-3.5 py-2 text-left text-rose-600 hover:bg-rose-50 transition-colors"
               >
                 <LogOut className="w-3.5 h-3.5 text-rose-500" />
-                <span>Exit Demo to Landing</span>
+                <span>{isAuthConfigured ? 'Sign Out' : 'Exit Demo to Landing'}</span>
               </button>
             </div>
           )}

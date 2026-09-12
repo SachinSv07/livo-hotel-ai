@@ -35,6 +35,9 @@ import {
 import { aiService, AiParsedIntent } from '../services/aiService';
 import { taskService } from '../services/taskService';
 import { requestService } from '../services/requestService';
+import { authService } from '../services/authService';
+import { supabase } from '../services/supabaseClient';
+import { ROLE_HOME } from '../config/roleAccess';
 import confetti from 'canvas-confetti';
 
 export type NavTab = 
@@ -72,6 +75,12 @@ const taskStatusForRequest = (status: RequestStatus): TaskStatus => {
   }
 };
 
+const minutesSince = (timestamp: string): number | null => {
+  const parsedTimestamp = Date.parse(timestamp);
+  if (Number.isNaN(parsedTimestamp)) return null;
+  return Math.max(0, Math.floor((Date.now() - parsedTimestamp) / 60000));
+};
+
 interface AppContextType {
   // Navigation & User
   currentTab: NavTab;
@@ -80,6 +89,9 @@ interface AppContextType {
   setCurrentUserRole: (role: UserRole) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (loggedIn: boolean) => void;
+  isAuthConfigured: boolean;
+  signInWithPassword: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
   currentLanguage: LanguageCode;
   setCurrentLanguage: (lang: LanguageCode) => void;
 
@@ -151,7 +163,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Navigation & Auth
   const [currentTab, setCurrentTab] = useState<NavTab>('dashboard');
   const [currentUserRole, setCurrentUserRole] = useState<UserRole>('Admin');
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!authService.isConfigured);
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('en');
 
   // Main Collections
@@ -166,11 +178,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [requests, setRequests] = useState<GuestRequest[]>(() => {
+    if (requestService.isConfigured) return [];
     const saved = localStorage.getItem('lance_requests');
     return saved ? JSON.parse(saved) : INITIAL_REQUESTS;
   });
 
   const [tasks, setTasks] = useState<TaskItem[]>(() => {
+    if (requestService.isConfigured) return [];
     const saved = localStorage.getItem('lance_tasks');
     return saved ? JSON.parse(saved) : INITIAL_TASKS;
   });
@@ -217,6 +231,55 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isDemoTourOpen, setIsDemoTourOpen] = useState(false);
   const [demoStep, setDemoStep] = useState(1);
   const [toasts, setToasts] = useState<Toast[]>([]);
+
+  useEffect(() => {
+    if (!supabase) return;
+
+    let isCancelled = false;
+
+    const applySession = async (userId: string | undefined) => {
+      if (!userId) {
+        setIsLoggedIn(false);
+        return;
+      }
+
+      try {
+        const profile = await authService.fetchStaffProfile(userId);
+        if (!isCancelled) {
+          setCurrentUserRole(profile.role);
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Unable to load staff profile from Supabase.', error);
+        if (!isCancelled) setIsLoggedIn(false);
+      }
+    };
+
+    void supabase.auth.getSession().then(({ data }) => applySession(data.session?.user.id));
+
+    const { data: authSubscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      void applySession(session?.user.id);
+    });
+
+    return () => {
+      isCancelled = true;
+      authSubscription.subscription.unsubscribe();
+    };
+  }, []);
+
+  const signInWithPassword = async (email: string, password: string) => {
+    const profile = await authService.signIn(email, password);
+    setCurrentUserRole(profile.role);
+    setIsLoggedIn(true);
+    setCurrentTab(ROLE_HOME[profile.role]);
+  };
+
+  const signOut = async () => {
+    await authService.signOut();
+    setIsLoggedIn(false);
+    setCurrentUserRole('Admin');
+    setCurrentTab('landing');
+  };
 
   // Sync to LocalStorage
   useEffect(() => {
@@ -303,10 +366,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         assignedToStaffId: existingTask?.assignedToStaffId || assignedStaff?.id || 'staff-1',
         assignedToStaffName: existingTask?.assignedToStaffName || assignedStaff?.name || 'Auto-Routing',
         createdAt: request.createdAt,
-        acceptedAt: existingTask?.acceptedAt,
+        acceptedAt: request.acknowledgedAt || existingTask?.acceptedAt,
         completedAt: request.completedAt || existingTask?.completedAt,
         slaMinutes: request.slaMinutes,
-        timeRemainingMins: existingTask?.timeRemainingMins ?? request.slaMinutes,
+        estimatedDeliveryMins: request.estimatedDeliveryMins,
+        timeRemainingMins: request.completedAt
+          ? 0
+          : Math.max(0, request.slaMinutes - (minutesSince(request.createdAt) ?? 0)),
         notes: existingTask?.notes || [{
           id: `note-${request.id}`,
           staffName: 'Receptionist AI',
@@ -510,9 +576,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       priority: reqData.priority || 'Normal',
       status: reqData.status || 'Pending',
       channel: reqData.channel || 'WhatsApp',
-      createdAt: 'Just now',
-      updatedAt: 'Just now',
-      slaMinutes: reqData.slaMinutes || 15,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      slaMinutes: reqData.slaMinutes || taskService.calculateSlaMinutes(reqData.priority || 'Normal', reqData.department || 'Housekeeping'),
+      estimatedDeliveryMins: reqData.estimatedDeliveryMins,
       isAiHandled: reqData.isAiHandled ?? true,
       pmsSyncStatus: 'synced',
       assignedStaffName: reqData.assignedStaffName || 'Priya Sharma'
@@ -523,13 +590,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     void requestService.insertRequest(newReq)
       .then(savedRequest => {
         setRequests(prev => [savedRequest, ...prev.filter(request => request.id !== savedRequest.id)]);
+        syncTaskForRequest(savedRequest);
       })
       .catch(error => {
         console.error('Unable to save request to Supabase.', error);
         showToast('Supabase Save Failed', 'The request remains available locally.', 'warning');
       });
 
-    // Create corresponding task on Lance Pad
+    if (requestService.isConfigured) {
+      showToast('New Request Created', `${newReq.request} for Room ${newReq.roomNumber}`, 'success');
+      return;
+    }
+
+    // Create corresponding task on Lance Pad when operating without Supabase.
     const bestStaff = taskService.findBestAvailableStaff(newReq.department, staff);
     const newTask: TaskItem = {
       id: `TASK-${510 + tasks.length}`,
@@ -543,8 +616,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       status: 'NEW',
       assignedToStaffId: bestStaff?.id || 'staff-1',
       assignedToStaffName: bestStaff?.name || 'Priya Sharma',
-      createdAt: 'Just now',
+      createdAt: newReq.createdAt,
       slaMinutes: newReq.slaMinutes,
+      estimatedDeliveryMins: newReq.estimatedDeliveryMins,
       timeRemainingMins: newReq.slaMinutes,
       notes: [
         {
@@ -562,13 +636,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateRequestStatus = (reqId: string, status: RequestStatus) => {
-    setRequests(prev => prev.map(r => r.id === reqId ? { ...r, status, updatedAt: 'Just now' } : r));
+    const statusTimestamp = new Date().toISOString();
+    setRequests(prev => prev.map(r => r.id === reqId ? {
+      ...r,
+      status,
+      updatedAt: statusTimestamp,
+      acknowledgedAt: status === 'Pending' ? r.acknowledgedAt : r.acknowledgedAt || statusTimestamp,
+      completedAt: status === 'Completed' ? statusTimestamp : r.completedAt
+    } : r));
     setTasks(prev => prev.map(task => task.requestId === reqId
       ? {
           ...task,
           status: taskStatusForRequest(status),
+          acceptedAt: status === 'Pending' ? task.acceptedAt : task.acceptedAt || statusTimestamp,
           completedAt: status === 'Completed'
-            ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            ? statusTimestamp
             : task.completedAt
         }
       : task
@@ -808,6 +890,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setCurrentUserRole,
         isLoggedIn,
         setIsLoggedIn,
+        isAuthConfigured: authService.isConfigured,
+        signInWithPassword,
+        signOut,
         currentLanguage,
         setCurrentLanguage,
         staff,

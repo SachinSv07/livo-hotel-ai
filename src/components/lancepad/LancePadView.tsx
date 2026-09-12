@@ -22,6 +22,23 @@ import {
 } from 'lucide-react';
 import { TaskItem, Department, TaskStatus } from '../../types';
 import { ROLE_DEPARTMENT } from '../../config/roleAccess';
+import { canPerform } from '../../config/permissions';
+
+const formatTaskTimestamp = (timestamp?: string) => {
+  if (!timestamp) return 'Not recorded';
+  const parsedTimestamp = Date.parse(timestamp);
+  return Number.isNaN(parsedTimestamp)
+    ? timestamp
+    : new Date(parsedTimestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+};
+
+const getTaskDurationMinutes = (task: TaskItem) => {
+  if (!task.completedAt) return null;
+  const createdAt = Date.parse(task.createdAt);
+  const completedAt = Date.parse(task.completedAt);
+  if (Number.isNaN(createdAt) || Number.isNaN(completedAt)) return null;
+  return Math.max(0, Math.round((completedAt - createdAt) / 60000));
+};
 
 export const LancePadView: React.FC = () => {
   const { 
@@ -76,6 +93,7 @@ export const LancePadView: React.FC = () => {
 
   const handleConfirmCompletion = () => {
     if (completingTaskId) {
+      if (!canPerform(currentUserRole, 'tasks.complete')) return;
       completeTask(completingTaskId, {
         reason: 'Delivered request',
         guestNotified: true,
@@ -212,19 +230,19 @@ export const LancePadView: React.FC = () => {
                     </div>
 
                     <div className="pt-1 flex gap-2">
-                      <button
+                      {canPerform(currentUserRole, 'tasks.accept') && <button
                         onClick={() => acceptTask(task.id)}
                         className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors shadow-2xs"
                       >
                         Accept Task
-                      </button>
-                      <button
+                      </button>}
+                      {canPerform(currentUserRole, 'tasks.escalate') && <button
                         onClick={() => escalateTask(task.id, 'No staff responded in 5 mins')}
                         className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs transition-colors"
                         title="Escalate to Supervisor"
                       >
                         <ShieldAlert className="w-3.5 h-3.5" />
-                      </button>
+                      </button>}
                     </div>
                   </div>
                 ))
@@ -282,14 +300,21 @@ export const LancePadView: React.FC = () => {
                       </span>
                     </div>
 
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-500">
+                      <span>Created: {formatTaskTimestamp(task.createdAt)}</span>
+                      <span>Accepted: {formatTaskTimestamp(task.acceptedAt)}</span>
+                      <span>Remaining: {task.timeRemainingMins ?? task.slaMinutes}m</span>
+                      {task.estimatedDeliveryMins !== undefined && <span>Est. delivery: {task.estimatedDeliveryMins}m</span>}
+                    </div>
+
                     <div className="pt-1">
-                      <button
+                      {canPerform(currentUserRole, 'tasks.complete') && <button
                         onClick={() => setCompletingTaskId(task.id)}
                         className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5"
                       >
                         <Check className="w-3.5 h-3.5 text-teal-400" />
                         <span>Complete & Log Note</span>
-                      </button>
+                      </button>}
                     </div>
                   </div>
                 ))
@@ -323,7 +348,7 @@ export const LancePadView: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-mono font-bold text-slate-600">{task.id}</span>
                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
-                        Resolved in {task.completedAt ? '7 mins' : '8 mins'}
+                        Resolved in {getTaskDurationMinutes(task) ?? '—'}{getTaskDurationMinutes(task) !== null ? ' mins' : ''}
                       </span>
                     </div>
 
@@ -341,7 +366,7 @@ export const LancePadView: React.FC = () => {
 
                     <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-400 flex items-center justify-between">
                       <span>By: {task.assignedToStaffName}</span>
-                      <span>Opera PMS Logged ✓</span>
+                      <span>Completed: {formatTaskTimestamp(task.completedAt)}</span>
                     </div>
                   </div>
                 ))

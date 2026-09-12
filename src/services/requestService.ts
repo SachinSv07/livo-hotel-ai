@@ -1,5 +1,6 @@
 import { GuestRequest, Priority, RequestStatus } from '../types';
 import { isSupabaseConfigured, supabase } from './supabaseClient';
+import { taskService } from './taskService';
 
 type RequestRow = {
   id: string;
@@ -11,6 +12,8 @@ type RequestRow = {
   created_at: string | null;
   acknowledged_at: string | null;
   completed_at: string | null;
+  sla_minutes?: number | null;
+  estimated_delivery_mins?: number | null;
 };
 
 const departments: GuestRequest['department'][] = [
@@ -26,6 +29,11 @@ const departments: GuestRequest['department'][] = [
 
 const priorities: Priority[] = ['Low', 'Normal', 'High', 'Urgent'];
 const statuses: RequestStatus[] = ['Pending', 'In Progress', 'Escalated', 'Completed', 'Cancelled'];
+const requestColumns = 'id, room_number, request, department, priority, status, created_at, acknowledged_at, completed_at, sla_minutes, estimated_delivery_mins';
+const legacyRequestColumns = 'id, room_number, request, department, priority, status, created_at, acknowledged_at, completed_at';
+
+const hasMissingTimingColumns = (error: { message?: string } | null) =>
+  Boolean(error?.message && /sla_minutes|estimated_delivery_mins|column/i.test(error.message));
 
 const normalizeValue = (value: string | null | undefined) => {
   return (value || '')
@@ -45,6 +53,7 @@ const toDepartment = (value: string | null) => {
     housekeeping: 'Housekeeping',
     'front desk': 'Front Desk',
     engineering: 'Engineering',
+    maintenance: 'Engineering',
     concierge: 'Concierge',
     sales: 'Sales',
     security: 'Security',
@@ -91,13 +100,29 @@ const toGuestRequest = (row: RequestRow): GuestRequest => ({
   channel: 'WhatsApp',
   createdAt: row.created_at || new Date().toISOString(),
   updatedAt: row.acknowledged_at || row.created_at || new Date().toISOString(),
+  acknowledgedAt: row.acknowledged_at || undefined,
+  estimatedDeliveryMins: row.estimated_delivery_mins ?? undefined,
   completedAt: row.completed_at || undefined,
   isAiHandled: false,
   pmsSyncStatus: 'synced',
-  slaMinutes: 20
+  slaMinutes: row.sla_minutes ?? taskService.calculateSlaMinutes(toPriority(row.priority), toDepartment(row.department))
 });
 
 const toRequestRow = (request: GuestRequest) => ({
+  id: request.id,
+  room_number: request.roomNumber,
+  request: request.request,
+  department: request.department,
+  priority: request.priority,
+  status: request.status,
+  created_at: new Date().toISOString(),
+  acknowledged_at: request.status === 'Pending' ? null : new Date().toISOString(),
+  completed_at: request.status === 'Completed' ? new Date().toISOString() : null,
+  sla_minutes: request.slaMinutes,
+  estimated_delivery_mins: request.estimatedDeliveryMins ?? null
+});
+
+const toLegacyRequestRow = (request: GuestRequest) => ({
   id: request.id,
   room_number: request.roomNumber,
   request: request.request,
@@ -115,10 +140,19 @@ export const requestService = {
   async fetchRequests(): Promise<GuestRequest[]> {
     if (!supabase) return [];
 
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('requests')
-      .select('id, room_number, request, department, priority, status, created_at, acknowledged_at, completed_at')
+      .select(requestColumns)
       .order('created_at', { ascending: false });
+
+    if (hasMissingTimingColumns(error)) {
+      const legacyResult = await supabase
+        .from('requests')
+        .select(legacyRequestColumns)
+        .order('created_at', { ascending: false });
+      data = legacyResult.data as typeof data;
+      error = legacyResult.error;
+    }
 
     if (error) throw error;
     return (data as RequestRow[]).map(toGuestRequest);
@@ -127,11 +161,21 @@ export const requestService = {
   async insertRequest(request: GuestRequest): Promise<GuestRequest> {
     if (!supabase) return request;
 
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('requests')
       .insert(toRequestRow(request))
-      .select('id, room_number, request, department, priority, status, created_at, acknowledged_at, completed_at')
+      .select(requestColumns)
       .single();
+
+    if (hasMissingTimingColumns(error)) {
+      const legacyResult = await supabase
+        .from('requests')
+        .insert(toLegacyRequestRow(request))
+        .select(legacyRequestColumns)
+        .single();
+      data = legacyResult.data as typeof data;
+      error = legacyResult.error;
+    }
 
     if (error) throw error;
     return toGuestRequest(data as RequestRow);

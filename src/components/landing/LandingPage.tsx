@@ -29,22 +29,45 @@ export const LandingPage: React.FC = () => {
     setIsLoggedIn, 
     setCurrentUserRole, 
     setCurrentTab, 
-    setIsDemoTourOpen 
+    setIsDemoTourOpen,
+    isAuthConfigured,
+    signInWithPassword
   } = useApp();
 
   const [emailInput, setEmailInput] = useState('admin@lancehotel.com');
   const [passwordInput, setPasswordInput] = useState('demo123');
   const [selectedRole, setSelectedRole] = useState<UserRole>('Admin');
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = (e?: React.FormEvent) => {
+  const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    setCurrentUserRole(selectedRole);
-    setIsLoggedIn(true);
-    setCurrentTab('dashboard');
+    setLoginError(null);
+    setIsSubmitting(true);
+
+    try {
+      if (isAuthConfigured) {
+        await signInWithPassword(emailInput, passwordInput);
+      } else {
+        setCurrentUserRole(selectedRole);
+        setIsLoggedIn(true);
+        setCurrentTab('dashboard');
+      }
+      setShowLoginModal(false);
+    } catch {
+      setLoginError('Unable to sign in. Check your email, password, and staff profile.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleRoleQuickStart = (role: UserRole) => {
+    if (isAuthConfigured) {
+      setShowLoginModal(true);
+      return;
+    }
+
     setSelectedRole(role);
     setCurrentUserRole(role);
     setIsLoggedIn(true);
@@ -539,30 +562,34 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1.5">Select Role for Demo:</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['Admin', 'Manager', 'Receptionist', 'Housekeeping', 'Engineering', 'Sales'] as UserRole[]).map(role => (
-                    <button
-                      type="button"
-                      key={role}
-                      onClick={() => setSelectedRole(role)}
-                      className={`px-3 py-2 rounded-lg text-xs font-semibold border text-left transition-all ${
-                        selectedRole === role
-                          ? 'bg-teal-500/20 text-teal-300 border-teal-500/50'
-                          : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-800'
-                      }`}
-                    >
-                      {role}
-                    </button>
-                  ))}
-                </div>
+                {!isAuthConfigured && <>
+                  <label className="block text-xs text-slate-400 font-semibold mb-1.5">Select Role for Demo:</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(['Admin', 'Manager', 'Receptionist', 'Housekeeping', 'Engineering', 'Sales'] as UserRole[]).map(role => (
+                      <button
+                        type="button"
+                        key={role}
+                        onClick={() => setSelectedRole(role)}
+                        className={`px-3 py-2 rounded-lg text-xs font-semibold border text-left transition-all ${
+                          selectedRole === role
+                            ? 'bg-teal-500/20 text-teal-300 border-teal-500/50'
+                            : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-800'
+                        }`}
+                      >
+                        {role}
+                      </button>
+                    ))}
+                  </div>
+                </>}
+
+                {loginError && <p className="text-xs font-semibold text-rose-400" role="alert">{loginError}</p>}
               </div>
 
               <button
                 type="submit"
                 className="w-full py-3 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 text-slate-950 font-bold rounded-xl text-xs transition-all shadow-md active:scale-98"
               >
-                Sign In as {selectedRole}
+                {isSubmitting ? 'Signing In...' : isAuthConfigured ? 'Sign In' : `Sign In as ${selectedRole}`}
               </button>
             </form>
           </div>

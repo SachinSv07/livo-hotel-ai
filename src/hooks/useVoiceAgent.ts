@@ -23,10 +23,12 @@ export const useVoiceAgent = ({ roomNumber }: UseVoiceAgentOptions): VoiceAgent 
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'agent'; message: string }>>([]);
   const conversation = useRef<Conversation | null>(null);
+  const waitingForAgent = useRef(false);
 
   const endConversation = useCallback(() => {
     void conversation.current?.endSession();
     conversation.current = null;
+    waitingForAgent.current = false;
     setStatus('idle');
     setError(null);
   }, []);
@@ -50,18 +52,32 @@ export const useVoiceAgent = ({ roomNumber }: UseVoiceAgentOptions): VoiceAgent 
         onConnect: () => setStatus('listening'),
         onDisconnect: () => {
           conversation.current = null;
+          waitingForAgent.current = false;
           setStatus('idle');
         },
         onError: () => {
           conversation.current = null;
+          waitingForAgent.current = false;
           setError('Unable to connect to the AI Concierge.');
           setStatus('error');
         },
-        onModeChange: ({ mode }) => setStatus(mode === 'speaking' ? 'speaking' : 'listening'),
+        onModeChange: ({ mode }) => {
+          if (mode === 'speaking') {
+            setStatus('speaking');
+          } else if (!waitingForAgent.current) {
+            setStatus('listening');
+          }
+        },
         onMessage: ({ source, role, message }) => {
           const messageRole = role === 'user' || source === 'user' ? 'user' : 'agent';
           setMessages((currentMessages) => [...currentMessages, { role: messageRole, message }]);
-          if (messageRole === 'user') setStatus('thinking');
+          if (messageRole === 'user') {
+            waitingForAgent.current = true;
+            setStatus('thinking');
+          } else {
+            waitingForAgent.current = false;
+            setStatus('speaking');
+          }
         }
       });
 
@@ -80,6 +96,7 @@ export const useVoiceAgent = ({ roomNumber }: UseVoiceAgentOptions): VoiceAgent 
     if (!trimmedMessage) return;
 
     if (conversation.current) {
+      waitingForAgent.current = true;
       setStatus('thinking');
       conversation.current.sendUserMessage(trimmedMessage);
       return;

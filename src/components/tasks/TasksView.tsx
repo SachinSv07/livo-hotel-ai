@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { TaskItem, Department, TaskStatus } from '../../types';
 import { ROLE_DEPARTMENT } from '../../config/roleAccess';
+import { canPerform } from '../../config/permissions';
 
 export const TasksView: React.FC = () => {
   const { 
@@ -167,7 +168,7 @@ export const TasksView: React.FC = () => {
                     SLA: {task.slaMinutes}m
                   </span>
 
-                  {task.status === 'NEW' && (
+                  {task.status === 'NEW' && canPerform(currentUserRole, 'tasks.accept') && (
                     <button
                       onClick={() => acceptTask(task.id)}
                       className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all"
@@ -176,7 +177,7 @@ export const TasksView: React.FC = () => {
                     </button>
                   )}
 
-                  {task.status === 'IN PROGRESS' && (
+                  {task.status === 'IN PROGRESS' && canPerform(currentUserRole, 'tasks.complete') && (
                     <button
                       onClick={() => completeTask(task.id, {
                         reason: 'Task executed',

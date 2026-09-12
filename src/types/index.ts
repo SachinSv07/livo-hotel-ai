@@ -83,6 +83,7 @@ export interface GuestRequest {
   channel: Channel;
   createdAt: string;
   updatedAt: string;
+  acknowledgedAt?: string;
   estimatedDeliveryMins?: number;
   completedAt?: string;
   resolutionNotes?: string;
@@ -108,6 +109,7 @@ export interface TaskItem {
   acceptedAt?: string;
   completedAt?: string;
   slaMinutes: number;
+  estimatedDeliveryMins?: number;
   timeRemainingMins?: number;
   notes: Array<{
     id: string;
