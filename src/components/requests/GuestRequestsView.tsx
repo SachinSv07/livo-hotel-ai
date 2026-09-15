@@ -349,7 +349,7 @@ export const GuestRequestsView: React.FC = () => {
                   type="submit"
                   className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold shadow-xs"
                 >
-                  Dispatch to Lance Pad
+                  Dispatch to Livo Pad
                 </button>
               </div>
             </form>

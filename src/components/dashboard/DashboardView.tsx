@@ -71,7 +71,7 @@ export const DashboardView: React.FC = () => {
     Housekeeping: {
       title: 'Housekeeping Workboard',
       description: 'Your active room-service queue, SLA countdowns, and requests ready for completion.',
-      primaryLabel: 'Open Lance Pad',
+      primaryLabel: 'Open Livo Pad',
       primaryTab: 'lancepad' as const
     },
     Engineering: {
@@ -325,7 +325,7 @@ export const DashboardView: React.FC = () => {
                       onClick={() => setCurrentTab('lancepad')}
                       className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold transition-all"
                     >
-                      Open on Lance Pad
+                      Open on Livo Pad
                     </button>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export const DashboardView: React.FC = () => {
                 onClick={() => setCurrentTab('lancepad')}
                 className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5"
               >
-                <span>{isLeadership ? 'Manage Staff Shifts on Lance Pad' : 'Open My Lance Pad Queue'}</span>
+                <span>{isLeadership ? 'Manage Staff Shifts on Livo Pad' : 'Open My Livo Pad Queue'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

@@ -70,7 +70,7 @@ export const TasksView: React.FC = () => {
           className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs"
         >
           <Tablet className="w-4 h-4 text-teal-400" />
-          <span>Switch to Lance Pad Tablet View</span>
+          <span>Switch to Livo Pad Tablet View</span>
         </button>
       </div>
 

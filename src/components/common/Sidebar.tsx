@@ -68,7 +68,7 @@ export const Sidebar: React.FC = () => {
     },
     { 
       tab: 'lancepad', 
-      label: 'Lance Pad', 
+      label: 'Livo Pad', 
       icon: Tablet, 
       badge: activeTasksCount > 0 ? activeTasksCount : undefined,
       badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',

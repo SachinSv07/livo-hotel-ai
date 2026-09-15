@@ -602,7 +602,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return;
     }
 
-    // Create corresponding task on Lance Pad when operating without Supabase.
+    // Create corresponding task on Livo Pad when operating without Supabase.
     const bestStaff = taskService.findBestAvailableStaff(newReq.department, staff);
     const newTask: TaskItem = {
       id: `TASK-${510 + tasks.length}`,
@@ -833,9 +833,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       showToast('Demo Step 2', 'Receptionist AI verified Room 402 with Opera PMS and dispatched task.', 'success');
       setCurrentTab('receptionist');
     } else if (step === 3) {
-      // Step 3: Lance Pad receives task
+      // Step 3: Livo Pad receives task
       setCurrentTab('lancepad');
-      showToast('Demo Step 3', 'Task TASK-501 appeared live on Lance Pad!', 'info');
+      showToast('Demo Step 3', 'Task TASK-501 appeared live on Livo Pad!', 'info');
     } else if (step === 4) {
       // Step 4: Staff accepts task
       acceptTask('TASK-501');

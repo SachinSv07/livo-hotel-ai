@@ -133,8 +133,8 @@ export const aiService = {
         pmsSyncSteps: [
           { step: 'Connecting to Opera PMS Work Orders...', subtext: `Locating Room ${roomNumber} Guest Folio`, system: 'Oracle Opera PMS' },
           { step: 'Verifying Room Status & Engineering Log...', subtext: 'HVAC Sensor alert matched', system: 'BMS HVAC Gateway' },
-          { step: 'Dispatching Emergency Work Order...', subtext: 'Assigning to Duty Engineer Kumar Velu', system: 'Lance Pad Dispatcher' },
-          { step: 'Verification Complete - Task Active on Lance Pad', subtext: 'SLA countdown started (15 mins)', system: 'Lance Pad' }
+          { step: 'Dispatching Emergency Work Order...', subtext: 'Assigning to Duty Engineer Kumar Velu', system: 'Livo Pad Dispatcher' },
+          { step: 'Verification Complete - Task Active on Livo Pad', subtext: 'SLA countdown started (15 mins)', system: 'Livo Pad' }
         ]
       };
     }
@@ -229,13 +229,13 @@ export const aiService = {
       itemSummary: item,
       confidence: 0.98,
       responseMessage: `Absolutely! I have created a housekeeping task for Room ${roomNumber} for ${item.toLowerCase()}. Housekeeping staff Priya Sharma has accepted the request and your items will be delivered within 8 minutes.`,
-      recommendedAction: 'Create Housekeeping Task on Lance Pad',
+      recommendedAction: 'Create Housekeeping Task on Livo Pad',
       detectedLanguage: currentLanguage,
       isSalesLead: false,
       pmsSyncSteps: [
         { step: 'Connecting to Legacy PMS / Housekeeping Gateway...', subtext: `Locating Room ${roomNumber} occupied status`, system: 'Oracle Opera PMS' },
         { step: 'Finding Available Housekeeping Attendant...', subtext: 'Priya Sharma on 4th Floor Floor-Pantry selected', system: 'Lance Staff Router' },
-        { step: 'Creating Task TASK-501 on Lance Pad...', subtext: `SLA: 10 minutes | Room: ${roomNumber}`, system: 'Lance Pad Staff Hub' },
+        { step: 'Creating Task TASK-501 on Livo Pad...', subtext: `SLA: 10 minutes | Room: ${roomNumber}`, system: 'Livo Pad Staff Hub' },
         { step: 'Action Complete – Staff notified via Mobile Pad', subtext: 'Guest updated in real-time', system: 'Lance Real-Time Service' }
       ]
     };

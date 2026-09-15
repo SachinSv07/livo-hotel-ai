@@ -113,7 +113,7 @@ export const LancePadView: React.FC = () => {
             <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
               <Tablet className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight">Lance Pad – Hotel Staff Operations Hub</h1>
+            <h1 className="text-xl font-bold tracking-tight">Livo Pad – Hotel Staff Operations Hub</h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
               Tablet Mode
             </span>

@@ -213,7 +213,7 @@ export const GlobalSearchModal: React.FC = () => {
                 <div>
                   <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                     <CheckSquare className="w-3 h-3 text-emerald-600" />
-                    <span>Lance Pad Operational Tasks</span>
+                    <span>Livo Pad Operational Tasks</span>
                   </div>
                   <div className="space-y-1">
                     {matchingTasks.map(t => (

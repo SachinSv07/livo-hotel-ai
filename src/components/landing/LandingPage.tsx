@@ -107,7 +107,7 @@ export const LandingPage: React.FC = () => {
             <a href="#solution" className="hover:text-teal-400 transition-colors">3 Core Modules</a>
             <a href="#receptionist" className="hover:text-teal-400 transition-colors">Receptionist AI</a>
             <a href="#sales" className="hover:text-teal-400 transition-colors">Sales AI</a>
-            <a href="#lancepad" className="hover:text-teal-400 transition-colors">Lance Pad</a>
+            <a href="#lancepad" className="hover:text-teal-400 transition-colors">Livo Pad</a>
             <a href="#legacy-pms" className="hover:text-teal-400 transition-colors">PMS Integration</a>
           </nav>
 
@@ -223,7 +223,7 @@ export const LandingPage: React.FC = () => {
                 <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
                   <p className="text-[11px] text-slate-400 font-bold uppercase">Pending Tasks</p>
                   <p className="text-2xl font-black text-amber-400 mt-1">11</p>
-                  <span className="text-[10px] text-slate-400">On Lance Pad</span>
+                  <span className="text-[10px] text-slate-400">On Livo Pad</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
                   <p className="text-[11px] text-slate-400 font-bold uppercase">Avg Response Time</p>
@@ -395,14 +395,14 @@ export const LandingPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Module 3: Lance Pad */}
+            {/* Module 3: Livo Pad */}
             <div id="lancepad" className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-4">
                   <Tablet className="w-6 h-6" />
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Module 03</span>
-                <h3 className="text-xl font-bold text-white mt-1">Lance Pad Operations Hub</h3>
+                <h3 className="text-xl font-bold text-white mt-1">Livo Pad Operations Hub</h3>
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                   Tablet-first staff workspace replacing walkie-talkies. Live Kanban board, real-time department chat (#housekeeping, #engineering), and SLA escalations.
                 </p>
@@ -429,7 +429,7 @@ export const LandingPage: React.FC = () => {
                 }}
                 className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-emerald-900/60 text-emerald-300 border border-slate-700 hover:border-emerald-500/50 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
               >
-                <span>Open Lance Pad</span>
+                <span>Open Livo Pad</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -486,7 +486,7 @@ export const LandingPage: React.FC = () => {
                 <p className="text-slate-400">&gt; Status: Occupied / Guaranteed / Departure: Sep 04</p>
                 <p className="text-emerald-400">&gt; [OK] Created Housekeeping Ticket #501</p>
                 <p className="text-emerald-400">&gt; [OK] Assigned: Priya Sharma (Floor 4 Pantry)</p>
-                <p className="text-teal-300 font-bold">&gt; ✓ Task Active on Lance Pad Hub (ETA: 8 mins)</p>
+                <p className="text-teal-300 font-bold">&gt; ✓ Task Active on Livo Pad Hub (ETA: 8 mins)</p>
               </div>
             </div>
           </div>

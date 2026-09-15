@@ -385,13 +385,13 @@ export const ReceptionistAiView: React.FC = () => {
               </div>
             </div>
 
-            {/* Jump to Lance Pad CTA */}
+            {/* Jump to Livo Pad CTA */}
             <div className="mt-4 pt-3 border-t border-slate-100">
               <button
                 onClick={() => setCurrentTab('lancepad')}
                 className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs"
               >
-                <span>Track on Lance Pad Tablet</span>
+                <span>Track on Livo Pad Tablet</span>
                 <ArrowRight className="w-3.5 h-3.5 text-teal-400" />
               </button>
             </div>

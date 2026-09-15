@@ -144,7 +144,7 @@ export const SettingsView: React.FC = () => {
                 className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
               />
               <span className="text-[10px] text-slate-400 mt-1 block">
-                Requests above {aiConfidenceThreshold}% confidence auto-dispatch to Lance Pad without manual receptionist clicks.
+                Requests above {aiConfidenceThreshold}% confidence auto-dispatch to Livo Pad without manual receptionist clicks.
               </span>
             </div>
           </div>
@@ -157,7 +157,7 @@ export const SettingsView: React.FC = () => {
                 onChange={e => setAutoDispatchTasks(e.target.checked)}
                 className="w-4 h-4 rounded text-teal-600 focus:ring-teal-500"
               />
-              <span>Enable direct autonomous task creation on Lance Pad tablet hub</span>
+              <span>Enable direct autonomous task creation on Livo Pad tablet hub</span>
             </label>
 
             <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer">
