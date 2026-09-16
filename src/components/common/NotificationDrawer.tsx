@@ -42,7 +42,7 @@ export const NotificationDrawer: React.FC = () => {
       case 'sales_lead':
         return <TrendingUp className="w-4 h-4 text-blue-600" />;
       case 'task_completed':
-        return <CheckCircle2 className="w-4 h-4 text-emerald-600" />;
+        return <CheckCircle2 className="w-4 h-4 text-[#395C3E]" />;
       case 'ai_handoff':
         return <Bot className="w-4 h-4 text-[#9C6F2F]" />;
       default:

@@ -142,8 +142,8 @@ export const DashboardView: React.FC = () => {
       subtext: 'Average request SLA',
       change: 'From request data',
       icon: Clock,
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-50 border-emerald-200'
+      color: 'text-[#395C3E]',
+      bg: 'bg-[#F0F5F1] border-[#B9D3BC]'
     },
     {
       title: 'Resolution Rate',
@@ -255,7 +255,7 @@ export const DashboardView: React.FC = () => {
           <div className="p-5 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
             <div className="flex items-center justify-between pb-3 mb-4 border-b border-stone-100">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <div className="w-2 h-2 rounded-full bg-[#4B7350] animate-pulse"></div>
                 <h2 className="text-sm font-bold text-stone-900 tracking-tight">{isSalesRole ? 'Sales Pipeline Activity' : `${currentUserRole} Service Queue`}</h2>
               </div>
               <button
@@ -299,7 +299,7 @@ export const DashboardView: React.FC = () => {
                         </span>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                           req.status === 'Completed' 
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            ? 'bg-[#F0F5F1] text-[#2C4930] border-[#B9D3BC]'
                             : req.status === 'Escalated'
                             ? 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse'
                             : req.status === 'In Progress'

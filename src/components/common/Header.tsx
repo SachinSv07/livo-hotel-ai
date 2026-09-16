@@ -68,8 +68,8 @@ export const Header: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-sm font-bold text-stone-900 tracking-tight">Lance Grand Hotel</h1>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-pulse" />
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#F0F5F1] text-[#2C4930] border border-[#B9D3BC]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4B7350] mr-1 animate-pulse" />
                 Live 5-Star
               </span>
             </div>

@@ -97,8 +97,8 @@ export const AnalyticsView: React.FC = () => {
 
         <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
           <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">Avg SLA Resolution</span>
-          <span className="text-2xl font-black text-emerald-700 font-['Outfit',sans-serif] mt-1 block">7.4 mins</span>
-          <span className="text-[10px] text-emerald-700 font-semibold">Under 10m target</span>
+          <span className="text-2xl font-black text-[#2C4930] font-['Outfit',sans-serif] mt-1 block">7.4 mins</span>
+          <span className="text-[10px] text-[#2C4930] font-semibold">Under 10m target</span>
         </div>
 
         <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
@@ -150,7 +150,7 @@ export const AnalyticsView: React.FC = () => {
             <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
               Response & Dispatch Speed: Traditional vs Lance OS
             </h3>
-            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-bold text-[#2C4930] bg-[#F0F5F1] px-2 py-0.5 rounded">
               96% Faster Dispatch
             </span>
           </div>

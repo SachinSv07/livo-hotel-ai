@@ -14,7 +14,7 @@ export const ToastContainer: React.FC = () => {
           key={toast.id}
           className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-lg backdrop-blur-md transition-all duration-300 transform translate-y-0 ${
             toast.type === 'success'
-              ? 'bg-emerald-950/90 text-emerald-100 border-emerald-500/40 shadow-emerald-950/40'
+              ? 'bg-[#0D190E]/90 text-[#DCE9DE] border-[#4B7350]/40 shadow-[#0D190E]/40'
               : toast.type === 'warning'
               ? 'bg-amber-950/90 text-amber-100 border-amber-500/40 shadow-amber-950/40'
               : toast.type === 'error'
@@ -23,7 +23,7 @@ export const ToastContainer: React.FC = () => {
           }`}
         >
           <div className="mt-0.5 shrink-0">
-            {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+            {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#699370]" />}
             {toast.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-400" />}
             {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-rose-400" />}
             {toast.type === 'info' && <Info className="w-5 h-5 text-[#CC9A4C]" />}

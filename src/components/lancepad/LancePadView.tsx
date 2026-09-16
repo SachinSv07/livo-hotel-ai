@@ -107,14 +107,14 @@ export const LancePadView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Title Header Banner (Tablet-optimized) */}
-      <div className="p-5 rounded-xl bg-gradient-to-r from-emerald-950 via-stone-900 to-stone-950 text-white border border-emerald-800/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-gradient-to-r from-[#0D190E] via-stone-900 to-stone-950 text-white border border-[#213823]/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#4B7350]/20 text-[#699370] border border-[#4B7350]/30 flex items-center justify-center">
               <Tablet className="w-5 h-5" />
             </div>
             <h1 className="text-xl font-bold tracking-tight font-['Outfit',sans-serif]">Livo Pad – Hotel Staff Operations Hub</h1>
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#4B7350]/20 text-[#91B596] border border-[#4B7350]/40">
               Tablet Mode
             </span>
           </div>
@@ -129,7 +129,7 @@ export const LancePadView: React.FC = () => {
             onClick={() => setActiveTab('board')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'board'
-                ? 'bg-emerald-600 text-white shadow-xs'
+                ? 'bg-[#395C3E] text-white shadow-xs'
                 : 'text-stone-400 hover:text-white'
             }`}
           >
@@ -141,7 +141,7 @@ export const LancePadView: React.FC = () => {
             onClick={() => setActiveTab('chat')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'chat'
-                ? 'bg-emerald-600 text-white shadow-xs'
+                ? 'bg-[#395C3E] text-white shadow-xs'
                 : 'text-stone-400 hover:text-white'
             }`}
           >
@@ -232,7 +232,7 @@ export const LancePadView: React.FC = () => {
                     <div className="pt-1 flex gap-2">
                       {canPerform(currentUserRole, 'tasks.accept') && <button
                         onClick={() => acceptTask(task.id)}
-                        className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors shadow-2xs"
+                        className="flex-1 py-2 bg-[#395C3E] hover:bg-[#2C4930] text-white rounded-lg text-xs font-bold transition-colors shadow-2xs"
                       >
                         Accept Task
                       </button>}
@@ -294,8 +294,8 @@ export const LancePadView: React.FC = () => {
 
                     <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
                       <span>{task.department}</span>
-                      <span className="font-mono text-emerald-700 font-bold flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-emerald-600" />
+                      <span className="font-mono text-[#2C4930] font-bold flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-[#395C3E]" />
                         Target: {task.slaMinutes}m
                       </span>
                     </div>
@@ -326,12 +326,12 @@ export const LancePadView: React.FC = () => {
           <div className="bg-stone-100/70 p-4 rounded-xl border border-stone-200/80 flex flex-col min-h-[500px]">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-200">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#4B7350]"></span>
                 <h3 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                   Resolved & Verified ({completedTasks.length})
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-emerald-700 font-bold">SLA MET</span>
+              <span className="text-[10px] font-mono text-[#2C4930] font-bold">SLA MET</span>
             </div>
 
             <div className="space-y-3 flex-1 overflow-y-auto pr-1">
@@ -343,11 +343,11 @@ export const LancePadView: React.FC = () => {
                 completedTasks.map(task => (
                   <div
                     key={task.id}
-                    className="p-4 rounded-xl bg-white border border-emerald-200/60 shadow-2xs opacity-90 space-y-2.5"
+                    className="p-4 rounded-xl bg-white border border-[#B9D3BC]/60 shadow-2xs opacity-90 space-y-2.5"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-mono font-bold text-stone-600">{task.id}</span>
-                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-bold text-[#213823] bg-[#DCE9DE] px-2 py-0.5 rounded-full">
                         Resolved in {getTaskDurationMinutes(task) ?? '—'}{getTaskDurationMinutes(task) !== null ? ' mins' : ''}
                       </span>
                     </div>
@@ -391,7 +391,7 @@ export const LancePadView: React.FC = () => {
                   onClick={() => setSelectedChannel(ch)}
                   className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-semibold transition-all text-left ${
                     selectedChannel === ch
-                      ? 'bg-emerald-600 text-white font-bold shadow-xs'
+                      ? 'bg-[#395C3E] text-white font-bold shadow-xs'
                       : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-100'
                   }`}
                 >
@@ -415,7 +415,7 @@ export const LancePadView: React.FC = () => {
                 {staff.filter(s => s.status === 'Available' || s.status === 'Busy').map(s => (
                   <div key={s.id} className="flex items-center justify-between text-xs p-2 rounded-lg bg-white border border-stone-200">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#4B7350]"></span>
                       <span className="font-semibold text-stone-800">{s.name}</span>
                     </div>
                     <span className="text-[10px] text-stone-500">{s.department}</span>
@@ -430,7 +430,7 @@ export const LancePadView: React.FC = () => {
             {/* Header */}
             <div className="p-4 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Radio className="w-4 h-4 text-emerald-600" />
+                <Radio className="w-4 h-4 text-[#395C3E]" />
                 <span className="font-bold text-xs text-stone-900 uppercase">Channel {selectedChannel}</span>
               </div>
               <span className="text-[10px] text-stone-500">Broadcasting to on-duty tablets</span>
@@ -467,11 +467,11 @@ export const LancePadView: React.FC = () => {
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 placeholder={`Post update to ${selectedChannel}...`}
-                className="flex-1 text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+                className="flex-1 text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#4B7350]"
               />
               <button
                 type="submit"
-                className="p-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-xs"
+                className="p-2.5 bg-[#395C3E] hover:bg-[#2C4930] text-white rounded-xl shadow-xs"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -486,7 +486,7 @@ export const LancePadView: React.FC = () => {
           <div className="relative w-full max-w-md bg-white border border-stone-200 rounded-xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-2 border-b border-stone-100">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <CheckCircle2 className="w-5 h-5 text-[#395C3E]" />
                 <h3 className="text-sm font-bold text-stone-900">Complete Task {completingTaskId}</h3>
               </div>
               <button onClick={() => setCompletingTaskId(null)} className="text-stone-400 hover:text-stone-700">✕</button>
@@ -500,7 +500,7 @@ export const LancePadView: React.FC = () => {
                 value={completionNote}
                 onChange={e => setCompletionNote(e.target.value)}
                 rows={3}
-                className="w-full text-xs p-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-900 focus:bg-white focus:ring-1 focus:ring-emerald-500"
+                className="w-full text-xs p-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-900 focus:bg-white focus:ring-1 focus:ring-[#4B7350]"
               />
             </div>
 
@@ -513,7 +513,7 @@ export const LancePadView: React.FC = () => {
               </button>
               <button
                 onClick={handleConfirmCompletion}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs shadow-md active:scale-95 transition-all"
+                className="px-5 py-2 bg-[#395C3E] hover:bg-[#2C4930] text-white font-bold rounded-lg text-xs shadow-md active:scale-95 transition-all"
               >
                 Confirm Completion & Notify Guest
               </button>

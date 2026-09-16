@@ -192,7 +192,7 @@ export const SalesAiView: React.FC = () => {
                     <span className="text-xs font-bold text-stone-900">{opp.company}</span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       opp.leadScore >= 90 
-                        ? 'bg-emerald-100 text-emerald-800' 
+                        ? 'bg-[#DCE9DE] text-[#213823]' 
                         : opp.leadScore >= 80
                         ? 'bg-blue-100 text-blue-800'
                         : 'bg-amber-100 text-amber-800'
@@ -401,7 +401,7 @@ export const SalesAiView: React.FC = () => {
                     </div>
                     <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
                       <span className="text-[10px] text-stone-400 uppercase font-bold block">AI Lead Score</span>
-                      <span className="text-lg font-black text-emerald-700 font-['Outfit',sans-serif]">
+                      <span className="text-lg font-black text-[#2C4930] font-['Outfit',sans-serif]">
                         {selectedOpp.leadScore}/100
                       </span>
                     </div>
@@ -463,7 +463,7 @@ export const SalesAiView: React.FC = () => {
                           <h3 className="font-extrabold text-sm text-stone-900">Executive Banquet & Rooms Proposal</h3>
                           <p className="text-[11px] text-stone-500">Prepared for {selectedOpp.company} • Lance Grand Hotel Sales</p>
                         </div>
-                        <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                        <span className="text-xs font-mono font-bold text-[#2C4930] bg-[#F0F5F1] px-2.5 py-1 rounded-lg border border-[#B9D3BC]">
                           Total: ₹{(selectedOpp.proposalDetails?.total ?? 0).toLocaleString('en-IN')}
                         </span>
                       </div>
@@ -516,7 +516,7 @@ export const SalesAiView: React.FC = () => {
                               updateOpportunityStage(selectedOpp.id, 'Proposal');
                               showToast('Proposal Dispatched', `Proposal emailed to ${selectedOpp.contactEmail}`, 'success');
                             }}
-                            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs flex items-center gap-1.5 shadow-xs"
+                            className="px-4 py-2 bg-[#395C3E] hover:bg-[#2C4930] text-white font-bold rounded-lg text-xs flex items-center gap-1.5 shadow-xs"
                           >
                             <Send className="w-3.5 h-3.5" />
                             <span>Email Official Proposal</span>

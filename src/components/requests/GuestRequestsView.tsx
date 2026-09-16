@@ -218,7 +218,7 @@ export const GuestRequestsView: React.FC = () => {
                     <td className="p-3.5">
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold border ${
                         req.status === 'Completed'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          ? 'bg-[#F0F5F1] text-[#2C4930] border-[#B9D3BC]'
                           : req.status === 'In Progress'
                           ? 'bg-blue-50 text-blue-700 border-blue-200'
                           : req.status === 'Escalated'
@@ -242,7 +242,7 @@ export const GuestRequestsView: React.FC = () => {
                         {req.status === 'In Progress' && canPerform(currentUserRole, 'requests.update_status') && (
                           <button
                             onClick={() => updateRequestStatus(req.id, 'Completed')}
-                            className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-bold"
+                            className="px-2.5 py-1 bg-[#395C3E] hover:bg-[#2C4930] text-white rounded-lg text-[10px] font-bold"
                           >
                             Resolve
                           </button>

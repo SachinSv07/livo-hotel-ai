@@ -35,7 +35,7 @@ export const MessagesUniboxView: React.FC = () => {
   const getChannelIcon = (channel: Channel) => {
     switch (channel) {
       case 'WhatsApp':
-        return <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />;
+        return <MessageSquare className="w-3.5 h-3.5 text-[#395C3E]" />;
       case 'Email':
         return <Mail className="w-3.5 h-3.5 text-blue-600" />;
       case 'Phone':
@@ -141,7 +141,7 @@ export const MessagesUniboxView: React.FC = () => {
                   </div>
                 </div>
 
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-bold">
+                <span className="text-[10px] font-mono text-[#2C4930] bg-[#F0F5F1] px-2 py-0.5 rounded border border-[#B9D3BC] font-bold">
                   AI Assisted
                 </span>
               </div>

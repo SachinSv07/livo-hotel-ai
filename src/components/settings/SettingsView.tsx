@@ -104,12 +104,12 @@ export const SettingsView: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200 flex items-center justify-between text-xs">
+          <div className="p-3 rounded-xl bg-[#F0F5F1]/60 border border-[#B9D3BC] flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="font-bold text-emerald-900">Oracle Opera PMS Live Bridge: ACTIVE & SYNCHRONIZED</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#4B7350] animate-pulse"></span>
+              <span className="font-bold text-[#172A19]">Oracle Opera PMS Live Bridge: ACTIVE & SYNCHRONIZED</span>
             </div>
-            <span className="text-[10px] font-mono text-emerald-700 font-bold">Latency: 28ms</span>
+            <span className="text-[10px] font-mono text-[#2C4930] font-bold">Latency: 28ms</span>
           </div>
         </div>
 
@@ -186,7 +186,7 @@ export const SettingsView: React.FC = () => {
               <div key={s.id} className="p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-stone-900">{s.name}</span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">
+                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#DCE9DE] text-[#213823]">
                     {s.status}
                   </span>
                 </div>
@@ -203,7 +203,7 @@ export const SettingsView: React.FC = () => {
         {/* Save Bar */}
         <div className="flex items-center justify-between pt-4">
           {savedSuccess ? (
-            <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5">
+            <span className="text-xs font-bold text-[#395C3E] flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4" />
               <span>Settings successfully saved & synced across cluster!</span>
             </span>

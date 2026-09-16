@@ -228,7 +228,7 @@ export const AiAssistantModal: React.FC = () => {
                   </div>
                   <div className="p-2.5 rounded-lg bg-stone-800/80 border border-stone-700/60">
                     <span className="text-[10px] text-stone-400 block uppercase font-bold">Priority</span>
-                    <span className={`font-bold ${parsedResult.priority === 'High' ? 'text-rose-400' : 'text-emerald-400'}`}>
+                    <span className={`font-bold ${parsedResult.priority === 'High' ? 'text-rose-400' : 'text-[#699370]'}`}>
                       {parsedResult.priority}
                     </span>
                   </div>

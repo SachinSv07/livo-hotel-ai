@@ -206,7 +206,7 @@ export const LandingPage: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <span className="w-3 h-3 rounded-full bg-rose-500"></span>
                   <span className="w-3 h-3 rounded-full bg-amber-500"></span>
-                  <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
+                  <span className="w-3 h-3 rounded-full bg-[#4B7350]"></span>
                   <span className="text-xs font-mono text-stone-400 ml-2">Lance Grand Hotel • Operations Cockpit</span>
                 </div>
                 <span className="text-xs font-mono px-2.5 py-1 rounded bg-[#B8853A]/10 text-[#CC9A4C] border border-[#B8853A]/30">
@@ -227,8 +227,8 @@ export const LandingPage: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
                   <p className="text-[11px] text-stone-400 font-bold uppercase">Avg Response Time</p>
-                  <p className="text-2xl font-black text-emerald-400 mt-1">42 sec</p>
-                  <span className="text-[10px] text-emerald-400 font-semibold">34% Faster</span>
+                  <p className="text-2xl font-black text-[#699370] mt-1">42 sec</p>
+                  <span className="text-[10px] text-[#699370] font-semibold">34% Faster</span>
                 </div>
                 <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
                   <p className="text-[11px] text-stone-400 font-bold uppercase">Revenue Pipeline</p>
@@ -398,10 +398,10 @@ export const LandingPage: React.FC = () => {
             {/* Module 3: Livo Pad */}
             <div id="lancepad" className="p-6 rounded-xl bg-stone-900 border border-stone-800 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#4B7350]/20 text-[#699370] border border-[#4B7350]/30 flex items-center justify-center mb-4">
                   <Tablet className="w-6 h-6" />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Module 03</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#699370]">Module 03</span>
                 <h3 className="text-xl font-bold text-white mt-1">Livo Pad Operations Hub</h3>
                 <p className="text-xs text-stone-400 mt-2 leading-relaxed">
                   Tablet-first staff workspace replacing walkie-talkies. Live Kanban board, real-time department chat (#housekeeping, #engineering), and SLA escalations.
@@ -409,15 +409,15 @@ export const LandingPage: React.FC = () => {
 
                 <ul className="mt-4 space-y-2 text-xs text-stone-300">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#699370]" />
                     <span>Real-time Task Kanban with Accept/Complete flows</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#699370]" />
                     <span>Department channels with staff mentions & updates</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#699370]" />
                     <span>High-priority escalation triggers & resolution modals</span>
                   </li>
                 </ul>
@@ -427,7 +427,7 @@ export const LandingPage: React.FC = () => {
                 onClick={() => {
                   handleRoleQuickStart('Housekeeping');
                 }}
-                className="mt-6 w-full py-2.5 bg-stone-800 hover:bg-emerald-900/60 text-emerald-300 border border-stone-700 hover:border-emerald-500/50 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
+                className="mt-6 w-full py-2.5 bg-stone-800 hover:bg-[#172A19]/60 text-[#91B596] border border-stone-700 hover:border-[#4B7350]/50 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
               >
                 <span>Open Livo Pad</span>
                 <ChevronRight className="w-4 h-4" />
@@ -475,7 +475,7 @@ export const LandingPage: React.FC = () => {
             <div className="p-6 rounded-xl bg-stone-950 border border-stone-800 text-xs font-mono">
               <div className="flex items-center justify-between pb-3 border-b border-stone-800 mb-3 text-stone-400">
                 <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#699370] animate-pulse"></span>
                   PMS Bridge Terminal
                 </span>
                 <span>Oracle Opera 5.6 Host</span>
@@ -484,8 +484,8 @@ export const LandingPage: React.FC = () => {
                 <p className="text-[#CC9A4C]">&gt; Guest Request: "2 Extra Towels in Room 402"</p>
                 <p className="text-stone-400">&gt; Locating Reservation: RES-98442 (Rahul Krishnan - Platinum VIP)</p>
                 <p className="text-stone-400">&gt; Status: Occupied / Guaranteed / Departure: Sep 04</p>
-                <p className="text-emerald-400">&gt; [OK] Created Housekeeping Ticket #501</p>
-                <p className="text-emerald-400">&gt; [OK] Assigned: Priya Sharma (Floor 4 Pantry)</p>
+                <p className="text-[#699370]">&gt; [OK] Created Housekeeping Ticket #501</p>
+                <p className="text-[#699370]">&gt; [OK] Assigned: Priya Sharma (Floor 4 Pantry)</p>
                 <p className="text-[#D9B26D] font-bold">&gt; ✓ Task Active on Livo Pad Hub (ETA: 8 mins)</p>
               </div>
             </div>

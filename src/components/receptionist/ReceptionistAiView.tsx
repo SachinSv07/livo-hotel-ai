@@ -176,7 +176,7 @@ export const ReceptionistAiView: React.FC = () => {
           <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-100">
               <h2 className="text-xs font-bold text-stone-900 uppercase tracking-wider">Oracle Opera PMS Record</h2>
-              <span className="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-bold">
+              <span className="text-[10px] font-mono text-[#395C3E] bg-[#F0F5F1] px-2 py-0.5 rounded font-bold">
                 VERIFIED
               </span>
             </div>
@@ -205,7 +205,7 @@ export const ReceptionistAiView: React.FC = () => {
               <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2.5 text-xs">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-stone-900 text-sm">Room {selectedConversation.roomNumber}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F0F5F1] text-[#2C4930] border border-[#B9D3BC]">
                     {selectedConversation.status}
                   </span>
                 </div>
@@ -284,7 +284,7 @@ export const ReceptionistAiView: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-[#B8853A]/20 text-[#CC9A4C] border border-[#B8853A]/40 flex items-center justify-center font-bold text-xs">
                   AI
                 </div>
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-stone-900"></span>
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#699370] ring-2 ring-stone-900"></span>
               </div>
               <div>
                 <p className="text-xs font-bold leading-tight">Receptionist AI Agent</p>

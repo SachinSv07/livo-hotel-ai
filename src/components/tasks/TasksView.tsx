@@ -52,11 +52,11 @@ export const TasksView: React.FC = () => {
       <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#F0F5F1] text-[#395C3E] border border-[#B9D3BC] flex items-center justify-center">
               <CheckSquare className="w-4 h-4" />
             </div>
             <h1 className="text-xl font-bold text-stone-900 tracking-tight font-['Outfit',sans-serif]">Staff Operations Task Central</h1>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#F0F5F1] text-[#2C4930] border border-[#B9D3BC]">
               {visibleTasks.length} Tasks
             </span>
           </div>
@@ -84,7 +84,7 @@ export const TasksView: React.FC = () => {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search tasks by room, title, or assigned staff..."
-              className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-500 font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#4B7350] font-medium"
             />
           </div>
 
@@ -145,7 +145,7 @@ export const TasksView: React.FC = () => {
                       <h4 className="text-xs font-bold text-stone-900">{task.title}</h4>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                         task.status === 'COMPLETED'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          ? 'bg-[#F0F5F1] text-[#2C4930] border-[#B9D3BC]'
                           : task.status === 'IN PROGRESS'
                           ? 'bg-blue-50 text-blue-700 border-blue-200'
                           : task.status === 'ESCALATED'
@@ -171,7 +171,7 @@ export const TasksView: React.FC = () => {
                   {task.status === 'NEW' && canPerform(currentUserRole, 'tasks.accept') && (
                     <button
                       onClick={() => acceptTask(task.id)}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all"
+                      className="px-3 py-1.5 bg-[#395C3E] hover:bg-[#2C4930] text-white rounded-lg text-xs font-bold transition-all"
                     >
                       Accept
                     </button>

@@ -108,7 +108,7 @@ export const SalesPipelineView: React.FC = () => {
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-stone-900 line-clamp-1">{opp.company}</span>
-                        <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">
+                        <span className="text-[10px] font-mono font-bold text-[#2C4930] bg-[#F0F5F1] px-1.5 py-0.2 rounded">
                           {opp.leadScore} pts
                         </span>
                       </div>

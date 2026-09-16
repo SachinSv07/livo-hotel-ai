@@ -71,7 +71,7 @@ export const Sidebar: React.FC = () => {
       label: 'Livo Pad', 
       icon: Tablet, 
       badge: activeTasksCount > 0 ? activeTasksCount : undefined,
-      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+      badgeColor: 'bg-[#DCE9DE] text-[#213823] border-[#91B596]',
       highlight: true
     },
     { 
@@ -216,7 +216,7 @@ export const Sidebar: React.FC = () => {
                 <Shield className="w-3.5 h-3.5 text-[#CC9A4C]" />
                 <span className="text-[11px] font-bold text-stone-200">{currentUserRole} Access</span>
               </div>
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span className="inline-block w-2 h-2 rounded-full bg-[#699370]"></span>
             </div>
             <p className="text-[10px] text-stone-400 leading-tight">
               Shift Active • Shift ends 04:30 PM
