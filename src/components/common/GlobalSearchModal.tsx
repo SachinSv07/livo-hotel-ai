@@ -94,30 +94,30 @@ export const GlobalSearchModal: React.FC = () => {
     <div className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 md:p-20 flex items-start justify-center">
       <div 
         onClick={() => setIsSearchOpen(false)}
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity" 
+        className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs transition-opacity" 
       />
 
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-stone-200 overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-200 bg-slate-50/50">
-          <Search className="w-5 h-5 text-teal-600 mr-3 shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b border-stone-200 bg-stone-50/50">
+          <Search className="w-5 h-5 text-[#9C6F2F] mr-3 shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search rooms, guests, requests, tasks, sales leads, policies..."
-            className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 focus:outline-hidden font-medium"
+            className="w-full bg-transparent text-sm text-stone-900 placeholder-stone-400 focus:outline-hidden font-medium"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 text-slate-400 hover:text-slate-600 mr-2"
+              className="p-1 text-stone-400 hover:text-stone-600 mr-2"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono text-slate-500 bg-white border border-slate-200 rounded shadow-2xs">
+          <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono text-stone-500 bg-white border border-stone-200 rounded shadow-2xs">
             ESC
           </kbd>
         </div>
@@ -125,29 +125,29 @@ export const GlobalSearchModal: React.FC = () => {
         {/* Results Container */}
         <div className="max-h-[60vh] overflow-y-auto p-3 space-y-4">
           {!q ? (
-            <div className="py-8 text-center text-slate-400">
-              <Sparkles className="w-8 h-8 mx-auto text-teal-500 mb-2 opacity-60" />
-              <p className="text-xs font-semibold text-slate-700">Quick Navigation Suggestions</p>
+            <div className="py-8 text-center text-stone-400">
+              <Sparkles className="w-8 h-8 mx-auto text-[#B8853A] mb-2 opacity-60" />
+              <p className="text-xs font-semibold text-stone-700">Quick Navigation Suggestions</p>
               <div className="mt-3 flex flex-wrap justify-center gap-1.5 max-w-md mx-auto">
-                <button onClick={() => { setQuery('Room 402'); }} className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700">Room 402</button>
-                <button onClick={() => { setQuery('Towels'); }} className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700">Extra Towels</button>
-                <button onClick={() => { setQuery('Late checkout'); }} className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700">Late Checkout Policy</button>
-                <button onClick={() => { setQuery('TechNova'); }} className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700">TechNova Lead</button>
-                <button onClick={() => { setQuery('AC Maintenance'); }} className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700">AC Maintenance</button>
+                <button onClick={() => { setQuery('Room 402'); }} className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs text-stone-700">Room 402</button>
+                <button onClick={() => { setQuery('Towels'); }} className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs text-stone-700">Extra Towels</button>
+                <button onClick={() => { setQuery('Late checkout'); }} className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs text-stone-700">Late Checkout Policy</button>
+                <button onClick={() => { setQuery('TechNova'); }} className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs text-stone-700">TechNova Lead</button>
+                <button onClick={() => { setQuery('AC Maintenance'); }} className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs text-stone-700">AC Maintenance</button>
               </div>
             </div>
           ) : !hasResults ? (
-            <div className="py-8 text-center text-slate-400">
-              <p className="text-sm font-semibold text-slate-700">No results found for "{query}"</p>
-              <p className="text-xs text-slate-400 mt-1">Try searching for a room number, guest name, or department.</p>
+            <div className="py-8 text-center text-stone-400">
+              <p className="text-sm font-semibold text-stone-700">No results found for "{query}"</p>
+              <p className="text-xs text-stone-400 mt-1">Try searching for a room number, guest name, or department.</p>
             </div>
           ) : (
             <div className="space-y-4">
               {/* Guests Results */}
               {matchingGuests.length > 0 && (
                 <div>
-                  <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <User className="w-3 h-3 text-teal-600" />
+                  <div className="px-2 pb-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <User className="w-3 h-3 text-[#9C6F2F]" />
                     <span>Guests & Rooms</span>
                   </div>
                   <div className="space-y-1">
@@ -155,25 +155,25 @@ export const GlobalSearchModal: React.FC = () => {
                       <button
                         key={g.id}
                         onClick={() => navigateTo('receptionist')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 text-left transition-colors group"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-stone-100 text-left transition-colors group"
                       >
                         <div className="flex items-center gap-3">
-                          <span className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
+                          <span className="w-8 h-8 rounded-lg bg-stone-900 text-white font-bold text-xs flex items-center justify-center">
                             {g.roomNumber}
                           </span>
                           <div>
                             <div className="flex items-center gap-2">
-                              <p className="text-xs font-bold text-slate-900">{g.name}</p>
+                              <p className="text-xs font-bold text-stone-900">{g.name}</p>
                               {g.vipStatus && (
                                 <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-semibold">
                                   {g.vipTier} VIP
                                 </span>
                               )}
                             </div>
-                            <p className="text-[11px] text-slate-500">{g.email} • {g.phone}</p>
+                            <p className="text-[11px] text-stone-500">{g.email} • {g.phone}</p>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-700 group-hover:translate-x-0.5 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:translate-x-0.5 transition-all" />
                       </button>
                     ))}
                   </div>
@@ -183,7 +183,7 @@ export const GlobalSearchModal: React.FC = () => {
               {/* Guest Requests Results */}
               {matchingRequests.length > 0 && (
                 <div>
-                  <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="px-2 pb-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
                     <ConciergeBell className="w-3 h-3 text-amber-600" />
                     <span>Live Guest Requests</span>
                   </div>
@@ -192,16 +192,16 @@ export const GlobalSearchModal: React.FC = () => {
                       <button
                         key={r.id}
                         onClick={() => navigateTo('requests')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 text-left transition-colors group"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-stone-100 text-left transition-colors group"
                       >
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-slate-900">Room {r.roomNumber} – {r.request}</span>
-                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-semibold">{r.status}</span>
+                            <span className="text-xs font-bold text-stone-900">Room {r.roomNumber} – {r.request}</span>
+                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-stone-200 text-stone-700 font-semibold">{r.status}</span>
                           </div>
-                          <p className="text-[11px] text-slate-500">{r.department} • Assigned to {r.assignedStaffName || 'Unassigned'}</p>
+                          <p className="text-[11px] text-stone-500">{r.department} • Assigned to {r.assignedStaffName || 'Unassigned'}</p>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-700 group-hover:translate-x-0.5 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:translate-x-0.5 transition-all" />
                       </button>
                     ))}
                   </div>
@@ -211,7 +211,7 @@ export const GlobalSearchModal: React.FC = () => {
               {/* Tasks Results */}
               {matchingTasks.length > 0 && (
                 <div>
-                  <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="px-2 pb-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
                     <CheckSquare className="w-3 h-3 text-emerald-600" />
                     <span>Livo Pad Operational Tasks</span>
                   </div>
@@ -220,11 +220,11 @@ export const GlobalSearchModal: React.FC = () => {
                       <button
                         key={t.id}
                         onClick={() => navigateTo('lancepad')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 text-left transition-colors group"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-stone-100 text-left transition-colors group"
                       >
                         <div>
-                          <p className="text-xs font-bold text-slate-900">{t.id}: {t.title}</p>
-                          <p className="text-[11px] text-slate-500">Room {t.roomNumber} • {t.department} • {t.assignedToStaffName}</p>
+                          <p className="text-xs font-bold text-stone-900">{t.id}: {t.title}</p>
+                          <p className="text-[11px] text-stone-500">Room {t.roomNumber} • {t.department} • {t.assignedToStaffName}</p>
                         </div>
                         <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
                           {t.status}
@@ -238,7 +238,7 @@ export const GlobalSearchModal: React.FC = () => {
               {/* Sales Leads Results */}
               {matchingOpportunities.length > 0 && (
                 <div>
-                  <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="px-2 pb-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
                     <TrendingUp className="w-3 h-3 text-blue-600" />
                     <span>Sales Pipeline Leads</span>
                   </div>
@@ -247,11 +247,11 @@ export const GlobalSearchModal: React.FC = () => {
                       <button
                         key={o.id}
                         onClick={() => navigateTo('pipeline')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 text-left transition-colors group"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-stone-100 text-left transition-colors group"
                       >
                         <div>
-                          <p className="text-xs font-bold text-slate-900">{o.company} – {o.eventType}</p>
-                          <p className="text-[11px] text-slate-500">{o.guestCount} Guests • Stage: {o.stage} • Value: ₹{(o.estimatedValue / 100000).toFixed(1)}L</p>
+                          <p className="text-xs font-bold text-stone-900">{o.company} – {o.eventType}</p>
+                          <p className="text-[11px] text-stone-500">{o.guestCount} Guests • Stage: {o.stage} • Value: ₹{(o.estimatedValue / 100000).toFixed(1)}L</p>
                         </div>
                         <span className="text-xs font-bold text-blue-700">₹{(o.estimatedValue / 100000).toFixed(1)}L</span>
                       </button>
@@ -263,7 +263,7 @@ export const GlobalSearchModal: React.FC = () => {
               {/* Knowledge Base Results */}
               {matchingKnowledge.length > 0 && (
                 <div>
-                  <div className="px-2 pb-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="px-2 pb-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
                     <BookOpen className="w-3 h-3 text-purple-600" />
                     <span>Hotel Knowledge Base</span>
                   </div>
@@ -272,11 +272,11 @@ export const GlobalSearchModal: React.FC = () => {
                       <button
                         key={k.id}
                         onClick={() => navigateTo('knowledge')}
-                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 text-left transition-colors group"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-stone-100 text-left transition-colors group"
                       >
                         <div>
-                          <p className="text-xs font-bold text-slate-900">{k.title}</p>
-                          <p className="text-[11px] text-slate-500 line-clamp-1">{k.content}</p>
+                          <p className="text-xs font-bold text-stone-900">{k.title}</p>
+                          <p className="text-[11px] text-stone-500 line-clamp-1">{k.content}</p>
                         </div>
                         <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">
                           {k.category}
@@ -291,7 +291,7 @@ export const GlobalSearchModal: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="p-3 border-t border-stone-100 bg-stone-50 flex items-center justify-between text-[11px] text-stone-500">
           <span>Search indexed with Opera PMS & Lance Knowledge Base</span>
           <span>Press <strong>ESC</strong> to close</span>
         </div>

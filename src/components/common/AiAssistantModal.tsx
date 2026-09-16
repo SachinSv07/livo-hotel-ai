@@ -37,7 +37,7 @@ export const AiAssistantModal: React.FC = () => {
       label: 'Housekeeping Pillow Request',
       text: 'Room 305 needs 2 extra hypoallergenic pillows and fresh sheets.',
       icon: ConciergeBell,
-      color: 'bg-teal-50 text-teal-700 border-teal-200'
+      color: 'bg-[#FAF6EC] text-[#7D5825] border-[#E6CD9C]'
     },
     {
       label: 'High-Priority AC Issue',
@@ -101,29 +101,29 @@ export const AiAssistantModal: React.FC = () => {
     <div className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 md:p-12 flex items-center justify-center">
       <div 
         onClick={() => setIsAiModalOpen(false)}
-        className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs transition-opacity" 
+        className="fixed inset-0 bg-stone-950/70 backdrop-blur-xs transition-opacity" 
       />
 
-      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl bg-white rounded-xl shadow-2xl border border-stone-200 overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+        <div className="px-6 py-4 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 border border-teal-500/40 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#B8853A]/20 text-[#CC9A4C] border border-[#B8853A]/40 flex items-center justify-center">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white tracking-tight">AI Command Center & Intent Engine</h3>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#B8853A]/20 text-[#D9B26D] border border-[#B8853A]/30">
                   GEMINI-READY ARCHITECTURE
                 </span>
               </div>
-              <p className="text-xs text-slate-400">Simulate autonomous intent parsing, task routing, legacy PMS sync & response generation</p>
+              <p className="text-xs text-stone-400">Simulate autonomous intent parsing, task routing, legacy PMS sync & response generation</p>
             </div>
           </div>
           <button
             onClick={() => setIsAiModalOpen(false)}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="p-1.5 text-stone-400 hover:text-white rounded-lg hover:bg-stone-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -141,7 +141,7 @@ export const AiAssistantModal: React.FC = () => {
             }}
             className="space-y-3"
           >
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider">
               Enter Inbound Guest Request or Sales Prompt:
             </label>
             <div className="relative flex items-center">
@@ -150,12 +150,12 @@ export const AiAssistantModal: React.FC = () => {
                 value={inputPrompt}
                 onChange={e => setInputPrompt(e.target.value)}
                 placeholder="e.g. 'Room 305 needs extra pillows' or '200 pax conference for Oct 20'..."
-                className="w-full pl-4 pr-28 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-teal-500 focus:border-transparent font-medium transition-all shadow-inner"
+                className="w-full pl-4 pr-28 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm text-stone-900 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#B8853A] focus:border-transparent font-medium transition-all shadow-inner"
               />
               <button
                 type="submit"
                 disabled={isProcessing || !inputPrompt.trim()}
-                className="absolute right-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+                className="absolute right-1.5 px-4 py-2 bg-[#9C6F2F] hover:bg-[#7D5825] disabled:opacity-50 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
               >
                 {isProcessing ? (
                   <RefreshCw className="w-3.5 h-3.5 animate-spin" />
@@ -169,7 +169,7 @@ export const AiAssistantModal: React.FC = () => {
 
           {/* Quick Preset Badges */}
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 mb-2">Try one-click test cases:</p>
+            <p className="text-[11px] font-semibold text-stone-500 mb-2">Try one-click test cases:</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {examplePrompts.map((p, i) => {
                 const Icon = p.icon;
@@ -192,42 +192,42 @@ export const AiAssistantModal: React.FC = () => {
 
           {/* Loading State */}
           {isProcessing && (
-            <div className="py-8 text-center bg-slate-50 rounded-xl border border-slate-200 border-dashed animate-pulse">
-              <Bot className="w-8 h-8 mx-auto text-teal-600 animate-bounce mb-2" />
-              <p className="text-xs font-bold text-slate-800">Processing Natural Language Understanding...</p>
-              <p className="text-[11px] text-slate-500">Extracting entities, checking Opera PMS room status, routing task</p>
+            <div className="py-8 text-center bg-stone-50 rounded-xl border border-stone-200 border-dashed animate-pulse">
+              <Bot className="w-8 h-8 mx-auto text-[#9C6F2F] animate-bounce mb-2" />
+              <p className="text-xs font-bold text-stone-800">Processing Natural Language Understanding...</p>
+              <p className="text-[11px] text-stone-500">Extracting entities, checking Opera PMS room status, routing task</p>
             </div>
           )}
 
           {/* Parsed Result Display */}
           {parsedResult && !isProcessing && (
             <div className="space-y-4 animate-in fade-in duration-300">
-              <div className="p-4 rounded-xl bg-slate-900 text-white border border-slate-800 shadow-md">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+              <div className="p-4 rounded-xl bg-stone-900 text-white border border-stone-800 shadow-md">
+                <div className="flex items-center justify-between border-b border-stone-800 pb-3 mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-ping"></span>
-                    <span className="text-xs font-mono font-bold text-teal-400 uppercase">AI Extracted Intent & Entities</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#CC9A4C] animate-ping"></span>
+                    <span className="text-xs font-mono font-bold text-[#CC9A4C] uppercase">AI Extracted Intent & Entities</span>
                   </div>
-                  <span className="text-[11px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-mono text-stone-400 bg-stone-800 px-2 py-0.5 rounded">
                     Confidence: {(parsedResult.confidence * 100).toFixed(0)}%
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                  <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 block uppercase font-bold">Intent</span>
-                    <span className="font-bold text-teal-300">{parsedResult.intentCategory}</span>
+                  <div className="p-2.5 rounded-lg bg-stone-800/80 border border-stone-700/60">
+                    <span className="text-[10px] text-stone-400 block uppercase font-bold">Intent</span>
+                    <span className="font-bold text-[#D9B26D]">{parsedResult.intentCategory}</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 block uppercase font-bold">Target Dept</span>
+                  <div className="p-2.5 rounded-lg bg-stone-800/80 border border-stone-700/60">
+                    <span className="text-[10px] text-stone-400 block uppercase font-bold">Target Dept</span>
                     <span className="font-bold text-white">{parsedResult.department}</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 block uppercase font-bold">Room / Entity</span>
+                  <div className="p-2.5 rounded-lg bg-stone-800/80 border border-stone-700/60">
+                    <span className="text-[10px] text-stone-400 block uppercase font-bold">Room / Entity</span>
                     <span className="font-bold text-amber-300">{parsedResult.roomNumber}</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 block uppercase font-bold">Priority</span>
+                  <div className="p-2.5 rounded-lg bg-stone-800/80 border border-stone-700/60">
+                    <span className="text-[10px] text-stone-400 block uppercase font-bold">Priority</span>
                     <span className={`font-bold ${parsedResult.priority === 'High' ? 'text-rose-400' : 'text-emerald-400'}`}>
                       {parsedResult.priority}
                     </span>
@@ -254,24 +254,24 @@ export const AiAssistantModal: React.FC = () => {
                 )}
 
                 {/* AI Simulated Response Box */}
-                <div className="mt-3 pt-3 border-t border-slate-800">
-                  <span className="text-[10px] text-teal-400 uppercase font-bold block mb-1">Generated Guest / Lead Response:</span>
-                  <div className="p-3 rounded-lg bg-slate-950 text-xs text-slate-200 border border-slate-800 font-sans leading-relaxed">
+                <div className="mt-3 pt-3 border-t border-stone-800">
+                  <span className="text-[10px] text-[#CC9A4C] uppercase font-bold block mb-1">Generated Guest / Lead Response:</span>
+                  <div className="p-3 rounded-lg bg-stone-950 text-xs text-stone-200 border border-stone-800 font-sans leading-relaxed">
                     "{parsedResult.responseMessage}"
                   </div>
                 </div>
               </div>
 
               {/* Legacy PMS Autonomous Computer Use / Integration Workflow */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div className="p-4 rounded-xl bg-stone-50 border border-stone-200">
                 <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-slate-700" />
-                    <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    <Terminal className="w-4 h-4 text-stone-700" />
+                    <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                       Autonomous Computer-Use & PMS Sync Execution
                     </h4>
                   </div>
-                  <span className="text-[10px] text-slate-500 font-mono">Live Bridge</span>
+                  <span className="text-[10px] text-stone-500 font-mono">Live Bridge</span>
                 </div>
 
                 <div className="space-y-2">
@@ -280,22 +280,22 @@ export const AiAssistantModal: React.FC = () => {
                       key={idx}
                       className={`flex items-start gap-2.5 p-2 rounded-lg text-xs transition-all ${
                         idx <= pmsStepIdx 
-                          ? 'bg-white border border-slate-200 shadow-2xs' 
+                          ? 'bg-white border border-stone-200 shadow-2xs' 
                           : 'opacity-40'
                       }`}
                     >
                       <div className="mt-0.5">
                         {idx <= pmsStepIdx ? (
-                          <CheckCircle2 className="w-4 h-4 text-teal-600" />
+                          <CheckCircle2 className="w-4 h-4 text-[#9C6F2F]" />
                         ) : (
-                          <div className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[10px] font-mono text-slate-400">
+                          <div className="w-4 h-4 rounded-full border border-stone-300 flex items-center justify-center text-[10px] font-mono text-stone-400">
                             {idx + 1}
                           </div>
                         )}
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold text-slate-800">{step.step}</p>
-                        <p className="text-[11px] text-slate-500">{step.subtext} • <span className="font-mono text-[10px] text-slate-400">{step.system}</span></p>
+                        <p className="font-semibold text-stone-800">{step.step}</p>
+                        <p className="text-[11px] text-stone-500">{step.subtext} • <span className="font-mono text-[10px] text-stone-400">{step.system}</span></p>
                       </div>
                     </div>
                   ))}
@@ -306,10 +306,10 @@ export const AiAssistantModal: React.FC = () => {
               <div className="flex justify-end pt-2">
                 <button
                   onClick={handleNavigateToResult}
-                  className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-2 shadow-md active:scale-98"
+                  className="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-2 shadow-md active:scale-98"
                 >
                   <span>View in {parsedResult.isSalesLead ? 'Sales Pipeline' : 'Livo Pad Operations Hub'}</span>
-                  <ArrowRight className="w-4 h-4 text-teal-400" />
+                  <ArrowRight className="w-4 h-4 text-[#CC9A4C]" />
                 </button>
               </div>
             </div>

@@ -70,18 +70,18 @@ export const GuestRequestsView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Banner */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 border border-teal-200 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#FAF6EC] text-[#9C6F2F] border border-[#E6CD9C] flex items-center justify-center">
               <ConciergeBell className="w-4 h-4" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Live Guest Requests Feed</h1>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+            <h1 className="text-xl font-bold text-stone-900 tracking-tight font-['Outfit',sans-serif]">Live Guest Requests Feed</h1>
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#FAF6EC] text-[#7D5825] border border-[#E6CD9C]">
               {visibleRequests.length} Total
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Real-time multi-channel feed with autonomous categorization, PMS synchronization, and SLA tracking.
           </p>
         </div>
@@ -89,32 +89,32 @@ export const GuestRequestsView: React.FC = () => {
         <div className="flex items-center gap-2">
           {canPerform(currentUserRole, 'requests.create') && <button
             onClick={() => setIsNewModalOpen(true)}
-            className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+            className="px-4 py-2 bg-[#9C6F2F] hover:bg-[#7D5825] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Manual Request</span>
           </button>}
           <button
             onClick={() => setCurrentTab('receptionist')}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+            className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
           >
-            <Sparkles className="w-4 h-4 text-teal-400" />
+            <Sparkles className="w-4 h-4 text-[#CC9A4C]" />
             <span>Receptionist AI</span>
           </button>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
+      <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3">
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <div className="relative flex-1 w-full">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search by room, guest name, or request item..."
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-teal-500 font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#B8853A] font-medium"
             />
           </div>
 
@@ -122,7 +122,7 @@ export const GuestRequestsView: React.FC = () => {
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value as any)}
-              className="text-xs font-semibold p-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700"
+              className="text-xs font-semibold p-2 bg-stone-50 border border-stone-200 rounded-xl text-stone-700"
             >
               <option value="All">All Statuses</option>
               <option value="Pending">Pending</option>
@@ -134,7 +134,7 @@ export const GuestRequestsView: React.FC = () => {
             <select
               value={deptFilter}
               onChange={e => setDeptFilter(e.target.value as any)}
-              className="text-xs font-semibold p-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700"
+              className="text-xs font-semibold p-2 bg-stone-50 border border-stone-200 rounded-xl text-stone-700"
             >
               <option value="All">All Departments</option>
               <option value="Housekeeping">Housekeeping</option>
@@ -148,10 +148,10 @@ export const GuestRequestsView: React.FC = () => {
       </div>
 
       {/* Requests Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+      <div className="bg-white rounded-xl border border-stone-200 shadow-2xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-stone-50 text-stone-500 border-b border-stone-200 font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="p-3.5">ID & Room</th>
                 <th className="p-3.5">Guest & Details</th>
@@ -162,39 +162,39 @@ export const GuestRequestsView: React.FC = () => {
                 <th className="p-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-stone-100">
               {filteredRequests.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="p-12 text-center text-slate-400">
-                    <CheckCircle2 className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-                    <p className="font-semibold text-slate-600">No guest requests found</p>
+                  <td colSpan={7} className="p-12 text-center text-stone-400">
+                    <CheckCircle2 className="w-8 h-8 mx-auto text-stone-300 mb-2" />
+                    <p className="font-semibold text-stone-600">No guest requests found</p>
                   </td>
                 </tr>
               ) : (
                 filteredRequests.map(req => (
-                  <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={req.id} className="hover:bg-stone-50/80 transition-colors">
                     <td className="p-3.5">
                       <div className="flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold flex items-center justify-center text-xs">
+                        <span className="w-8 h-8 rounded-lg bg-stone-900 text-white font-bold flex items-center justify-center text-xs">
                           {req.roomNumber}
                         </span>
                         <div>
-                          <span className="font-mono text-slate-500 font-semibold">{req.id}</span>
-                          <span className="block text-[10px] text-slate-400">{req.createdAt}</span>
+                          <span className="font-mono text-stone-500 font-semibold">{req.id}</span>
+                          <span className="block text-[10px] text-stone-400">{req.createdAt}</span>
                         </div>
                       </div>
                     </td>
 
                     <td className="p-3.5">
                       <div>
-                        <span className="font-bold text-slate-900">{req.guestName}</span>
-                        <p className="text-slate-600 mt-0.5 line-clamp-1">{req.request}</p>
+                        <span className="font-bold text-stone-900">{req.guestName}</span>
+                        <p className="text-stone-600 mt-0.5 line-clamp-1">{req.request}</p>
                       </div>
                     </td>
 
                     <td className="p-3.5">
-                      <span className="font-semibold text-slate-800">{req.department}</span>
-                      <span className="block text-[10px] font-mono text-teal-700 font-bold">
+                      <span className="font-semibold text-stone-800">{req.department}</span>
+                      <span className="block text-[10px] font-mono text-[#7D5825] font-bold">
                         {req.slaMinutes} mins SLA
                       </span>
                     </td>
@@ -203,14 +203,14 @@ export const GuestRequestsView: React.FC = () => {
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                         req.priority === 'High' || req.priority === 'Urgent'
                           ? 'bg-rose-50 text-rose-700 border-rose-200' 
-                          : 'bg-slate-100 text-slate-700 border-slate-200'
+                          : 'bg-stone-100 text-stone-700 border-stone-200'
                       }`}>
                         {req.priority}
                       </span>
                     </td>
 
                     <td className="p-3.5">
-                      <span className="text-[11px] font-medium text-slate-600">
+                      <span className="text-[11px] font-medium text-stone-600">
                         {req.channel}
                       </span>
                     </td>
@@ -234,7 +234,7 @@ export const GuestRequestsView: React.FC = () => {
                         {req.status === 'Pending' && canPerform(currentUserRole, 'requests.update_status') && (
                           <button
                             onClick={() => updateRequestStatus(req.id, 'In Progress')}
-                            className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[10px] font-bold"
+                            className="px-2.5 py-1 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-[10px] font-bold"
                           >
                             Dispatch
                           </button>
@@ -266,55 +266,55 @@ export const GuestRequestsView: React.FC = () => {
 
       {/* Manual Request Modal */}
       {isNewModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-slate-950/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <h3 className="text-sm font-bold text-slate-900">Create In-House Guest Request</h3>
-              <button onClick={() => setIsNewModalOpen(false)} className="text-slate-400 hover:text-slate-700">✕</button>
+        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-stone-950/70 backdrop-blur-xs">
+          <div className="relative w-full max-w-md bg-white border border-stone-200 rounded-xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+              <h3 className="text-sm font-bold text-stone-900">Create In-House Guest Request</h3>
+              <button onClick={() => setIsNewModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
             </div>
 
             <form onSubmit={handleCreateRequest} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 font-bold uppercase text-[10px] mb-1">Room #</label>
+                  <label className="block text-stone-700 font-bold uppercase text-[10px] mb-1">Room #</label>
                   <input
                     type="text"
                     value={newRoom}
                     onChange={e => setNewRoom(e.target.value)}
-                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                    className="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-700 font-bold uppercase text-[10px] mb-1">Guest Name</label>
+                  <label className="block text-stone-700 font-bold uppercase text-[10px] mb-1">Guest Name</label>
                   <input
                     type="text"
                     value={newGuestName}
                     onChange={e => setNewGuestName(e.target.value)}
-                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                    className="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold uppercase text-[10px] mb-1">Request Summary</label>
+                <label className="block text-stone-700 font-bold uppercase text-[10px] mb-1">Request Summary</label>
                 <input
                   type="text"
                   value={newRequestText}
                   onChange={e => setNewRequestText(e.target.value)}
-                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                  className="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 font-bold uppercase text-[10px] mb-1">Department</label>
+                  <label className="block text-stone-700 font-bold uppercase text-[10px] mb-1">Department</label>
                   <select
                     value={newDept}
                     onChange={e => setNewDept(e.target.value as Department)}
-                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                    className="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                   >
                     <option value="Housekeeping">Housekeeping</option>
                     <option value="Engineering">Engineering</option>
@@ -324,11 +324,11 @@ export const GuestRequestsView: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-700 font-bold uppercase text-[10px] mb-1">Priority</label>
+                  <label className="block text-stone-700 font-bold uppercase text-[10px] mb-1">Priority</label>
                   <select
                     value={newPriority}
                     onChange={e => setNewPriority(e.target.value as Priority)}
-                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                    className="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                   >
                     <option value="Normal">Normal (20m SLA)</option>
                     <option value="High">High (10m SLA)</option>
@@ -341,13 +341,13 @@ export const GuestRequestsView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsNewModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold"
+                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold shadow-xs"
+                  className="px-4 py-2 bg-[#9C6F2F] hover:bg-[#7D5825] text-white rounded-lg font-bold shadow-xs"
                 >
                   Dispatch to Livo Pad
                 </button>

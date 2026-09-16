@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
       label: 'Receptionist AI', 
       icon: Bot, 
       badge: '24/7',
-      badgeColor: 'bg-teal-50 text-teal-700 border-teal-200',
+      badgeColor: 'bg-[#FAF6EC] text-[#7D5825] border-[#E6CD9C]',
       highlight: true
     },
     { 
@@ -115,7 +115,7 @@ export const Sidebar: React.FC = () => {
       {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed bottom-5 left-5 z-40 p-3 bg-slate-900 text-white rounded-full shadow-xl border border-slate-700 hover:bg-slate-800 transition-transform active:scale-95"
+        className="lg:hidden fixed bottom-5 left-5 z-40 p-3 bg-stone-900 text-white rounded-full shadow-xl border border-stone-700 hover:bg-stone-800 transition-transform active:scale-95"
         aria-label="Toggle navigation menu"
       >
         {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -125,49 +125,49 @@ export const Sidebar: React.FC = () => {
       {isMobileOpen && (
         <div 
           onClick={() => setIsMobileOpen(false)}
-          className="lg:hidden fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 transition-opacity"
+          className="lg:hidden fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-30 transition-opacity"
         />
       )}
 
       {/* Sidebar Container */}
       <aside 
-        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 shadow-xl transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-stone-900 text-stone-300 flex flex-col border-r border-stone-800 shadow-xl transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-slate-800/80">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-stone-800/80">
           <button 
             onClick={() => handleNavClick('dashboard')} 
             className="flex items-center gap-2.5 text-left group"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-600 via-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 font-black shadow-md shadow-teal-900/30 group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 text-slate-950" />
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#D9B26D] to-[#8A6229] flex items-center justify-center text-stone-950 font-black shadow-md shadow-[#402D13]/40 group-hover:scale-105 transition-transform">
+              <Sparkles className="w-5 h-5 text-stone-950" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-base tracking-tight text-white font-['Outfit',sans-serif]">
                   LIVO
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-[#B8853A]/20 text-[#D9B26D] border border-[#B8853A]/30">
                   AI OS
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-medium">Hotel Operations Platform</p>
+              <p className="text-[10px] text-stone-400 font-medium">Hotel Operations Platform</p>
             </div>
           </button>
 
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden text-slate-400 hover:text-white p-1"
+            className="lg:hidden text-stone-400 hover:text-white p-1"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Navigation Item List */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1 scrollbar-thin scrollbar-thumb-slate-800">
-          <div className="px-3 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1 scrollbar-thin scrollbar-thumb-stone-800">
+          <div className="px-3 pb-2 text-[10px] font-bold text-stone-400 uppercase tracking-wider">
             Operations Center
           </div>
 
@@ -179,16 +179,16 @@ export const Sidebar: React.FC = () => {
               <button
                 key={item.tab}
                 onClick={() => handleNavClick(item.tab)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 group ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8853A]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 ${
                   isActive
-                    ? 'bg-teal-600 text-white shadow-md shadow-teal-900/40'
-                    : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                    ? 'bg-[#9C6F2F] text-white shadow-md shadow-[#402D13]/40'
+                    : 'text-stone-300 hover:bg-stone-800/80 hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon 
                     className={`w-4 h-4 transition-colors ${
-                      isActive ? 'text-white' : item.highlight ? 'text-teal-400' : 'text-slate-400 group-hover:text-slate-200'
+                      isActive ? 'text-white' : item.highlight ? 'text-[#CC9A4C]' : 'text-stone-400 group-hover:text-stone-200'
                     }`} 
                   />
                   <span>{item.label}</span>
@@ -197,7 +197,7 @@ export const Sidebar: React.FC = () => {
                 {item.badge !== undefined && (
                   <span 
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                      isActive ? 'bg-white/20 text-white border-white/30' : item.badgeColor || 'bg-slate-800 text-slate-300 border-slate-700'
+                      isActive ? 'bg-white/20 text-white border-white/30' : item.badgeColor || 'bg-stone-800 text-stone-300 border-stone-700'
                     }`}
                   >
                     {item.badge}
@@ -209,21 +209,21 @@ export const Sidebar: React.FC = () => {
         </div>
 
         {/* Bottom Role & System Card */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/40">
-          <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+        <div className="p-3 border-t border-stone-800/80 bg-stone-950/40">
+          <div className="p-3 rounded-xl bg-stone-800/60 border border-stone-700/60">
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-2">
-                <Shield className="w-3.5 h-3.5 text-teal-400" />
-                <span className="text-[11px] font-bold text-slate-200">{currentUserRole} Access</span>
+                <Shield className="w-3.5 h-3.5 text-[#CC9A4C]" />
+                <span className="text-[11px] font-bold text-stone-200">{currentUserRole} Access</span>
               </div>
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 shadow-xs shadow-emerald-400"></span>
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
             </div>
-            <p className="text-[10px] text-slate-400 leading-tight">
+            <p className="text-[10px] text-stone-400 leading-tight">
               Shift Active • Shift ends 04:30 PM
             </p>
-            <div className="mt-2.5 pt-2 border-t border-slate-700/40 flex items-center justify-between text-[10px] text-slate-400 font-mono">
+            <div className="mt-2.5 pt-2 border-t border-stone-700/40 flex items-center justify-between text-[10px] text-stone-400 font-mono">
               <span>Oracle Opera PMS</span>
-              <span className="text-teal-400 font-semibold">Synced ✓</span>
+              <span className="text-[#CC9A4C] font-semibold">Synced ✓</span>
             </div>
           </div>
         </div>

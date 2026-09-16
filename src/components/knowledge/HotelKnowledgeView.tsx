@@ -69,15 +69,15 @@ export const HotelKnowledgeView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Banner */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 border border-purple-200 flex items-center justify-center">
               <BookOpen className="w-4 h-4" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Hotel AI Knowledge Base</h1>
+            <h1 className="text-xl font-bold text-stone-900 tracking-tight font-['Outfit',sans-serif]">Hotel AI Knowledge Base</h1>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Grounding repository used by Receptionist AI and Sales AI to answer guest and client queries accurately.
           </p>
         </div>
@@ -92,15 +92,15 @@ export const HotelKnowledgeView: React.FC = () => {
       </div>
 
       {/* Search & Category Tabs */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
+      <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search hotel policies, pool timings, breakfast hours, spa pricing..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-purple-500 font-medium"
+            className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-purple-500 font-medium"
           />
         </div>
 
@@ -112,7 +112,7 @@ export const HotelKnowledgeView: React.FC = () => {
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
                   ? 'bg-purple-600 text-white shadow-xs'
-                  : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+                  : 'bg-stone-50 text-stone-600 hover:bg-stone-100 border border-stone-200'
               }`}
             >
               {cat}
@@ -124,15 +124,15 @@ export const HotelKnowledgeView: React.FC = () => {
       {/* Knowledge Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredKnowledge.length === 0 ? (
-          <div className="col-span-2 py-12 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-            <BookOpen className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-            <p className="text-sm font-semibold text-slate-700">No knowledge items match your search</p>
+          <div className="col-span-2 py-12 text-center text-stone-400 bg-white rounded-xl border border-stone-200">
+            <BookOpen className="w-8 h-8 mx-auto text-stone-300 mb-2" />
+            <p className="text-sm font-semibold text-stone-700">No knowledge items match your search</p>
           </div>
         ) : (
           filteredKnowledge.map(item => (
             <div
               key={item.id}
-              className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:shadow-xs transition-all space-y-3 flex flex-col justify-between"
+              className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs hover:shadow-xs transition-all space-y-3 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
@@ -140,31 +140,31 @@ export const HotelKnowledgeView: React.FC = () => {
                     {item.category}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-slate-400 font-mono">ID: {item.id}</span>
+                    <span className="text-[10px] text-stone-400 font-mono">ID: {item.id}</span>
                     <button 
                       onClick={() => deleteKnowledgeArticle(item.id)}
-                      className="text-slate-400 hover:text-rose-600 p-1"
+                      className="text-stone-400 hover:text-rose-600 p-1"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
 
-                <h3 className="text-sm font-bold text-slate-900">{item.title}</h3>
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line">
+                <h3 className="text-sm font-bold text-stone-900">{item.title}</h3>
+                <p className="text-xs text-stone-600 mt-2 leading-relaxed whitespace-pre-line">
                   {item.content}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+              <div className="pt-3 border-t border-stone-100 flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap gap-1">
                   {item.tags.map((kw, i) => (
-                    <span key={i} className="text-[10px] px-1.5 py-0.2 bg-slate-100 text-slate-600 rounded">
+                    <span key={i} className="text-[10px] px-1.5 py-0.2 bg-stone-100 text-stone-600 rounded">
                       #{kw}
                     </span>
                   ))}
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono">Updated: {item.lastUpdated}</span>
+                <span className="text-[10px] text-stone-400 font-mono">Updated: {item.lastUpdated}</span>
               </div>
             </div>
           ))
@@ -173,35 +173,35 @@ export const HotelKnowledgeView: React.FC = () => {
 
       {/* New Knowledge Modal */}
       {isNewModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-slate-950/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-stone-950/70 backdrop-blur-xs">
+          <div className="relative w-full max-w-lg bg-white border border-stone-200 rounded-xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
               <div className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-purple-600" />
-                <h3 className="text-sm font-bold text-slate-900">Add Hotel Knowledge Document</h3>
+                <h3 className="text-sm font-bold text-stone-900">Add Hotel Knowledge Document</h3>
               </div>
-              <button onClick={() => setIsNewModalOpen(false)} className="text-slate-400 hover:text-slate-700">✕</button>
+              <button onClick={() => setIsNewModalOpen(false)} className="text-stone-400 hover:text-stone-700">✕</button>
             </div>
 
             <form onSubmit={handleCreateKnowledge} className="space-y-3 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Document Title</label>
+                <label className="block font-bold text-stone-700 uppercase mb-1">Document Title</label>
                 <input
                   type="text"
                   value={title}
                   onChange={e => setTitle(e.target.value)}
                   placeholder="e.g. Infinity Rooftop Pool Timings & Regulations"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900"
+                  className="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900"
                   required
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Category</label>
+                <label className="block font-bold text-stone-700 uppercase mb-1">Category</label>
                 <select
                   value={category}
                   onChange={e => setCategory(e.target.value as any)}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold"
+                  className="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 font-semibold"
                 >
                   <option value="Hotel Information">Hotel Information</option>
                   <option value="Rooms">Rooms</option>
@@ -219,25 +219,25 @@ export const HotelKnowledgeView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Content / Policy Description</label>
+                <label className="block font-bold text-stone-700 uppercase mb-1">Content / Policy Description</label>
                 <textarea
                   value={content}
                   onChange={e => setContent(e.target.value)}
                   rows={4}
                   placeholder="Provide precise details, timings, rules, or pricing used by AI when answering guests..."
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900"
+                  className="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900"
                   required
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Tags (Comma Separated)</label>
+                <label className="block font-bold text-stone-700 uppercase mb-1">Tags (Comma Separated)</label>
                 <input
                   type="text"
                   value={keywords}
                   onChange={e => setKeywords(e.target.value)}
                   placeholder="pool, swimming, timings, towels, roof"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900"
+                  className="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900"
                 />
               </div>
 
@@ -245,7 +245,7 @@ export const HotelKnowledgeView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsNewModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold"
+                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg font-semibold"
                 >
                   Cancel
                 </button>

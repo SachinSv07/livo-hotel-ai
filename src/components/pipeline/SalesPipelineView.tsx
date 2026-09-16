@@ -37,22 +37,22 @@ export const SalesPipelineView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Banner */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center">
               <Kanban className="w-4 h-4" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Corporate Sales & Banquet CRM Pipeline</h1>
+            <h1 className="text-xl font-bold text-stone-900 tracking-tight font-['Outfit',sans-serif]">Corporate Sales & Banquet CRM Pipeline</h1>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Visual deal flow across 5 stages with automated lead scoring and contract value tracking.
           </p>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <span className="text-[10px] text-slate-400 font-bold uppercase block">Total Pipeline Value</span>
+            <span className="text-[10px] text-stone-400 font-bold uppercase block">Total Pipeline Value</span>
             <span className="text-lg font-black text-blue-700 font-['Outfit',sans-serif]">
               ₹{(totalPipelineValue / 100000).toFixed(1)} Lakhs
             </span>
@@ -77,15 +77,15 @@ export const SalesPipelineView: React.FC = () => {
           return (
             <div
               key={stage}
-              className="bg-slate-100/70 p-3.5 rounded-2xl border border-slate-200/80 flex flex-col min-h-[550px] min-w-[240px]"
+              className="bg-stone-100/70 p-3.5 rounded-xl border border-stone-200/80 flex flex-col min-h-[550px] min-w-[240px]"
             >
               {/* Column Header */}
-              <div className="pb-3 mb-3 border-b border-slate-200">
+              <div className="pb-3 mb-3 border-b border-stone-200">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                  <h3 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                     {stage}
                   </h3>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-white text-stone-700 border border-stone-200">
                     {stageDeals.length}
                   </span>
                 </div>
@@ -97,39 +97,39 @@ export const SalesPipelineView: React.FC = () => {
               {/* Deal Cards */}
               <div className="space-y-3 flex-1 overflow-y-auto pr-0.5">
                 {stageDeals.length === 0 ? (
-                  <div className="py-12 text-center text-slate-400 text-xs">
+                  <div className="py-12 text-center text-stone-400 text-xs">
                     <span>No deals in {stage}</span>
                   </div>
                 ) : (
                   stageDeals.map(opp => (
                     <div
                       key={opp.id}
-                      className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs hover:shadow-xs transition-all space-y-2.5"
+                      className="p-3.5 rounded-xl bg-white border border-stone-200 shadow-2xs hover:shadow-xs transition-all space-y-2.5"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-slate-900 line-clamp-1">{opp.company}</span>
+                        <span className="text-xs font-bold text-stone-900 line-clamp-1">{opp.company}</span>
                         <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">
                           {opp.leadScore} pts
                         </span>
                       </div>
 
-                      <div className="text-[11px] text-slate-600 space-y-0.5">
-                        <p className="font-medium text-slate-800">{opp.eventType}</p>
-                        <p className="flex items-center gap-1 text-slate-500">
+                      <div className="text-[11px] text-stone-600 space-y-0.5">
+                        <p className="font-medium text-stone-800">{opp.eventType}</p>
+                        <p className="flex items-center gap-1 text-stone-500">
                           <Users className="w-3 h-3" />
                           {opp.guestCount} Guests • {opp.roomsRequired} Rooms
                         </p>
-                        <p className="flex items-center gap-1 text-slate-500">
+                        <p className="flex items-center gap-1 text-stone-500">
                           <Calendar className="w-3 h-3" />
                           {opp.eventDates}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                      <div className="pt-2 border-t border-stone-100 flex items-center justify-between">
                         <span className="text-xs font-black text-blue-700">
                           ₹{(opp.estimatedValue / 100000).toFixed(1)}L
                         </span>
-                        <span className="text-[10px] text-slate-400 font-semibold">{opp.assignedStaffName}</span>
+                        <span className="text-[10px] text-stone-400 font-semibold">{opp.assignedStaffName}</span>
                       </div>
 
                       {/* Stage transition arrows */}
@@ -137,7 +137,7 @@ export const SalesPipelineView: React.FC = () => {
                         <button
                           onClick={() => moveStage(opp.id, opp.stage, 'prev')}
                           disabled={stages.indexOf(opp.stage) === 0}
-                          className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 rounded hover:bg-slate-100"
+                          className="p-1 text-stone-400 hover:text-stone-700 disabled:opacity-30 rounded hover:bg-stone-100"
                           title="Move to previous stage"
                         >
                           <ChevronLeft className="w-4 h-4" />
@@ -153,7 +153,7 @@ export const SalesPipelineView: React.FC = () => {
                         <button
                           onClick={() => moveStage(opp.id, opp.stage, 'next')}
                           disabled={stages.indexOf(opp.stage) === stages.length - 1}
-                          className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 rounded hover:bg-slate-100"
+                          className="p-1 text-stone-400 hover:text-stone-700 disabled:opacity-30 rounded hover:bg-stone-100"
                           title="Advance to next stage"
                         >
                           <ChevronRight className="w-4 h-4" />

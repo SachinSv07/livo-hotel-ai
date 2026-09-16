@@ -67,21 +67,21 @@ export const AnalyticsView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Banner */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 border border-teal-200 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#FAF6EC] text-[#9C6F2F] border border-[#E6CD9C] flex items-center justify-center">
               <BarChart3 className="w-4 h-4" />
             </div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Operations & Revenue Analytics</h1>
+            <h1 className="text-xl font-bold text-stone-900 tracking-tight font-['Outfit',sans-serif]">Operations & Revenue Analytics</h1>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Data insights on automated dispatching speed, SLA adherence, staff workload and pipeline conversion.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1.5 rounded-xl">
+          <span className="text-xs font-mono font-bold text-[#7D5825] bg-[#FAF6EC] border border-[#E6CD9C] px-3 py-1.5 rounded-xl">
             AI Automation: 74.2%
           </span>
         </div>
@@ -89,26 +89,26 @@ export const AnalyticsView: React.FC = () => {
 
       {/* KPI Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-        <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Total Weekly Requests</span>
-          <span className="text-2xl font-black text-slate-900 font-['Outfit',sans-serif] mt-1 block">1,316</span>
-          <span className="text-[10px] text-teal-700 font-semibold">+18.4% vs last week</span>
+        <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">Total Weekly Requests</span>
+          <span className="text-2xl font-black text-stone-900 font-['Outfit',sans-serif] mt-1 block">1,316</span>
+          <span className="text-[10px] text-[#7D5825] font-semibold">+18.4% vs last week</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Avg SLA Resolution</span>
+        <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">Avg SLA Resolution</span>
           <span className="text-2xl font-black text-emerald-700 font-['Outfit',sans-serif] mt-1 block">7.4 mins</span>
           <span className="text-[10px] text-emerald-700 font-semibold">Under 10m target</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Staff Time Saved</span>
+        <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">Staff Time Saved</span>
           <span className="text-2xl font-black text-blue-700 font-['Outfit',sans-serif] mt-1 block">148 hrs</span>
           <span className="text-[10px] text-blue-700 font-semibold">~21 hrs/day</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Sales Qualified Deals</span>
+        <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">Sales Qualified Deals</span>
           <span className="text-2xl font-black text-purple-700 font-['Outfit',sans-serif] mt-1 block">₹28.4L</span>
           <span className="text-[10px] text-purple-700 font-semibold">Q4 Event Bookings</span>
         </div>
@@ -117,12 +117,12 @@ export const AnalyticsView: React.FC = () => {
       {/* Chart Row 1: Request Volume & Response Time */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart A: Daily Request Volume & Automation */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+        <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-stone-100">
+            <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
               Weekly Requests: AI Autonomous vs Manual Phone Calls
             </h3>
-            <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-bold text-[#7D5825] bg-[#FAF6EC] px-2 py-0.5 rounded">
               74% AI Automated
             </span>
           </div>
@@ -145,9 +145,9 @@ export const AnalyticsView: React.FC = () => {
         </div>
 
         {/* Chart B: Response Time Comparison (Minutes) */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+        <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-stone-100">
+            <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
               Response & Dispatch Speed: Traditional vs Lance OS
             </h3>
             <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
@@ -176,8 +176,8 @@ export const AnalyticsView: React.FC = () => {
       {/* Chart Row 2: Categories & Channels */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Category Breakdown */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">
+        <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider mb-4 pb-2 border-b border-stone-100">
             Top Guest Request Categories
           </h3>
 
@@ -206,9 +206,9 @@ export const AnalyticsView: React.FC = () => {
                 <div key={cat.name} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: cat.color }}></span>
-                    <span className="text-slate-700 font-medium">{cat.name}</span>
+                    <span className="text-stone-700 font-medium">{cat.name}</span>
                   </div>
-                  <span className="font-bold text-slate-900">{cat.value}%</span>
+                  <span className="font-bold text-stone-900">{cat.value}%</span>
                 </div>
               ))}
             </div>
@@ -216,8 +216,8 @@ export const AnalyticsView: React.FC = () => {
         </div>
 
         {/* Channel Breakdown */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">
+        <div className="p-5 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider mb-4 pb-2 border-b border-stone-100">
             Guest Communication Channels
           </h3>
 
@@ -246,9 +246,9 @@ export const AnalyticsView: React.FC = () => {
                 <div key={chan.name} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: chan.color }}></span>
-                    <span className="text-slate-700 font-medium">{chan.name}</span>
+                    <span className="text-stone-700 font-medium">{chan.name}</span>
                   </div>
-                  <span className="font-bold text-slate-900">{chan.value}%</span>
+                  <span className="font-bold text-stone-900">{chan.value}%</span>
                 </div>
               ))}
             </div>

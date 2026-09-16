@@ -128,18 +128,18 @@ export const SalesAiView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Title Banner */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 text-white border border-blue-800/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-gradient-to-r from-blue-950 via-stone-900 to-stone-950 text-white border border-blue-800/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center">
               <TrendingUp className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight">Sales AI Agent (Corporate RFPs & Banquets)</h1>
+            <h1 className="text-xl font-bold tracking-tight font-['Outfit',sans-serif]">Sales AI Agent (Corporate RFPs & Banquets)</h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">
               Autonomous CRM
             </span>
           </div>
-          <p className="text-xs text-slate-300 mt-1">
+          <p className="text-xs text-stone-300 mt-1">
             Autonomous qualification, 0–100 lead scoring, automated banquet proposal generator, and sales CRM pipeline.
           </p>
         </div>
@@ -155,7 +155,7 @@ export const SalesAiView: React.FC = () => {
           </button>
           <button
             onClick={() => setCurrentTab('pipeline')}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 transition-colors"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-200 transition-colors"
           >
             Pipeline Kanban View
           </button>
@@ -166,12 +166,12 @@ export const SalesAiView: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Leads List (4 Cols) */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+          <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-100">
+              <h2 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
                 Active Corporate Leads ({opportunities.length})
               </h2>
-              <span className="text-[10px] text-slate-500 font-semibold">Sorted by Score</span>
+              <span className="text-[10px] text-stone-500 font-semibold">Sorted by Score</span>
             </div>
 
             <div className="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
@@ -185,11 +185,11 @@ export const SalesAiView: React.FC = () => {
                   className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                     selectedOppId === opp.id
                       ? 'bg-blue-50/70 border-blue-400 shadow-xs'
-                      : 'bg-slate-50/60 border-slate-200 hover:bg-slate-100'
+                      : 'bg-stone-50/60 border-stone-200 hover:bg-stone-100'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-900">{opp.company}</span>
+                    <span className="text-xs font-bold text-stone-900">{opp.company}</span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       opp.leadScore >= 90 
                         ? 'bg-emerald-100 text-emerald-800' 
@@ -201,13 +201,13 @@ export const SalesAiView: React.FC = () => {
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 mt-1">{opp.eventType} • {opp.guestCount} Guests</p>
+                  <p className="text-[11px] text-stone-600 mt-1">{opp.eventType} • {opp.guestCount} Guests</p>
 
-                  <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
+                  <div className="mt-2.5 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
                     <span className="font-extrabold text-blue-700">
                       ₹{(opp.estimatedValue / 100000).toFixed(1)} Lakhs
                     </span>
-                    <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700">
+                    <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white border border-stone-200 text-stone-700">
                       {opp.stage}
                     </span>
                   </div>
@@ -221,15 +221,15 @@ export const SalesAiView: React.FC = () => {
         <div className="lg:col-span-8 space-y-4">
           {activeTab === 'simulator' ? (
             /* Simulator Form */
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+            <div className="p-6 rounded-xl bg-white border border-stone-200 shadow-2xs">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-stone-100">
                 <div>
-                  <h2 className="text-sm font-bold text-slate-900 tracking-tight">Simulate Inbound Corporate Inquiry / RFP</h2>
-                  <p className="text-xs text-slate-500">Test autonomous parsing and instant quote generation</p>
+                  <h2 className="text-sm font-bold text-stone-900 tracking-tight">Simulate Inbound Corporate Inquiry / RFP</h2>
+                  <p className="text-xs text-stone-500">Test autonomous parsing and instant quote generation</p>
                 </div>
                 <button
                   onClick={() => setActiveTab('qualification')}
-                  className="text-xs text-slate-500 hover:text-slate-900 font-semibold"
+                  className="text-xs text-stone-500 hover:text-stone-900 font-semibold"
                 >
                   Cancel
                 </button>
@@ -238,79 +238,79 @@ export const SalesAiView: React.FC = () => {
               <form onSubmit={handleSimulateNewRfp} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Company / Organization</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Company / Organization</label>
                     <input
                       type="text"
                       value={rfpCompany}
                       onChange={e => setRfpCompany(e.target.value)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Contact Person</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Contact Person</label>
                     <input
                       type="text"
                       value={rfpContact}
                       onChange={e => setRfpContact(e.target.value)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Email Address</label>
                     <input
                       type="email"
                       value={rfpEmail}
                       onChange={e => setRfpEmail(e.target.value)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Event Type</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Event Type</label>
                     <input
                       type="text"
                       value={rfpEventType}
                       onChange={e => setRfpEventType(e.target.value)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Attendees / Delegates</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Attendees / Delegates</label>
                     <input
                       type="number"
                       value={rfpGuests}
                       onChange={e => setRfpGuests(parseInt(e.target.value) || 50)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Estimated Budget</label>
+                    <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Estimated Budget</label>
                     <input
                       type="text"
                       value={rfpBudget}
                       onChange={e => setRfpBudget(e.target.value)}
-                      className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                      className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Requested Dates</label>
+                  <label className="block text-xs font-bold text-stone-700 uppercase mb-1">Requested Dates</label>
                   <input
                     type="text"
                     value={rfpDates}
                     onChange={e => setRfpDates(e.target.value)}
-                    className="w-full text-xs font-semibold p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
+                    className="w-full text-xs font-semibold p-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-900 focus:bg-white focus:ring-1 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -329,17 +329,17 @@ export const SalesAiView: React.FC = () => {
             </div>
           ) : (
             /* Opportunity Details & Proposal Tabs */
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-6">
+            <div className="p-6 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-6">
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-base font-bold text-slate-900 tracking-tight">{selectedOpp.company}</h2>
+                    <h2 className="text-base font-bold text-stone-900 tracking-tight">{selectedOpp.company}</h2>
                     <span className="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
                       {selectedOpp.eventType}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-stone-500 mt-0.5">
                     Contact: {selectedOpp.contactName} ({selectedOpp.contactEmail} • {selectedOpp.contactPhone})
                   </p>
                 </div>
@@ -348,7 +348,7 @@ export const SalesAiView: React.FC = () => {
                   <button
                     onClick={() => setActiveTab('qualification')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                      activeTab === 'qualification' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'
+                      activeTab === 'qualification' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'
                     }`}
                   >
                     Lead Score & AI
@@ -356,7 +356,7 @@ export const SalesAiView: React.FC = () => {
                   <button
                     onClick={() => setActiveTab('proposal')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                      activeTab === 'proposal' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
+                      activeTab === 'proposal' ? 'bg-blue-600 text-white' : 'bg-stone-100 text-stone-600'
                     }`}
                   >
                     Proposal Document
@@ -366,7 +366,7 @@ export const SalesAiView: React.FC = () => {
 
               {/* Stage Progress Tracker */}
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Pipeline Deal Stage:</span>
+                <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block mb-2">Pipeline Deal Stage:</span>
                 <div className="grid grid-cols-5 gap-1.5 text-center text-xs font-semibold">
                   {stages.map((stage, idx) => {
                     const currentStageIdx = stages.indexOf(selectedOpp.stage);
@@ -378,7 +378,7 @@ export const SalesAiView: React.FC = () => {
                         className={`p-2 rounded-lg border transition-all ${
                           isPassed
                             ? 'bg-blue-50 border-blue-400 text-blue-800 font-bold'
-                            : 'bg-slate-50 border-slate-200 text-slate-400 hover:bg-slate-100'
+                            : 'bg-stone-50 border-stone-200 text-stone-400 hover:bg-stone-100'
                         }`}
                       >
                         <span className="text-[10px] block truncate">{stage}</span>
@@ -393,35 +393,35 @@ export const SalesAiView: React.FC = () => {
                 <div className="space-y-4">
                   {/* Lead Metrics */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">Estimated Revenue</span>
+                    <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
+                      <span className="text-[10px] text-stone-400 uppercase font-bold block">Estimated Revenue</span>
                       <span className="text-lg font-black text-blue-700 font-['Outfit',sans-serif]">
                         ₹{(selectedOpp.estimatedValue / 100000).toFixed(1)} Lakhs
                       </span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">AI Lead Score</span>
+                    <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
+                      <span className="text-[10px] text-stone-400 uppercase font-bold block">AI Lead Score</span>
                       <span className="text-lg font-black text-emerald-700 font-['Outfit',sans-serif]">
                         {selectedOpp.leadScore}/100
                       </span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">Delegates / Rooms</span>
-                      <span className="text-sm font-bold text-slate-800">
+                    <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
+                      <span className="text-[10px] text-stone-400 uppercase font-bold block">Delegates / Rooms</span>
+                      <span className="text-sm font-bold text-stone-800">
                         {selectedOpp.guestCount} pax / {selectedOpp.roomsRequired} rooms
                       </span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">Assigned Owner</span>
-                      <span className="text-sm font-bold text-slate-800">
+                    <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
+                      <span className="text-[10px] text-stone-400 uppercase font-bold block">Assigned Owner</span>
+                      <span className="text-sm font-bold text-stone-800">
                         {selectedOpp.assignedStaffName}
                       </span>
                     </div>
                   </div>
 
                   {/* AI Strategic Analysis Box */}
-                  <div className="p-4 rounded-xl bg-slate-900 text-white border border-slate-800 space-y-3">
-                    <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <div className="p-4 rounded-xl bg-stone-900 text-white border border-stone-800 space-y-3">
+                    <div className="flex items-center justify-between border-b border-stone-800 pb-2">
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-blue-400" />
                         <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400">Sales AI Opportunity Assessment</h4>
@@ -431,7 +431,7 @@ export const SalesAiView: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="text-xs space-y-2 text-slate-300">
+                    <div className="text-xs space-y-2 text-stone-300">
                       <p><strong>Notes:</strong> {selectedOpp.notes || 'Inbound corporate booking request verified.'}</p>
                       <p><strong>Timeline:</strong> {selectedOpp.aiExtractedInsights?.decisionTimeline || 'Within 2 weeks'}</p>
                       <p><strong>Budget Match:</strong> {selectedOpp.aiExtractedInsights?.budgetIndication || 'High alignment with Q4 banquet rate card.'}</p>
@@ -457,11 +457,11 @@ export const SalesAiView: React.FC = () => {
               {activeTab === 'proposal' && (
                 <div className="space-y-4 animate-in fade-in duration-200">
                   {selectedOpp.proposalDetails ? (
-                    <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-4">
-                      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                    <div className="p-5 rounded-xl bg-stone-50 border border-stone-200 text-xs space-y-4">
+                      <div className="flex items-center justify-between border-b border-stone-200 pb-3">
                         <div>
-                          <h3 className="font-extrabold text-sm text-slate-900">Executive Banquet & Rooms Proposal</h3>
-                          <p className="text-[11px] text-slate-500">Prepared for {selectedOpp.company} • Lance Grand Hotel Sales</p>
+                          <h3 className="font-extrabold text-sm text-stone-900">Executive Banquet & Rooms Proposal</h3>
+                          <p className="text-[11px] text-stone-500">Prepared for {selectedOpp.company} • Lance Grand Hotel Sales</p>
                         </div>
                         <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
                           Total: ₹{(selectedOpp.proposalDetails?.total ?? 0).toLocaleString('en-IN')}
@@ -470,29 +470,29 @@ export const SalesAiView: React.FC = () => {
 
                       {/* Line Items Table */}
                       <div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Itemized Budget Breakdown:</span>
-                        <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                        <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block mb-2">Itemized Budget Breakdown:</span>
+                        <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
                           <table className="w-full text-left text-xs">
-                            <thead className="bg-slate-100 text-slate-700 text-[10px] uppercase font-bold">
+                            <thead className="bg-stone-100 text-stone-700 text-[10px] uppercase font-bold">
                               <tr>
                                 <th className="p-2.5">Item & Description</th>
                                 <th className="p-2.5 text-right">Total Amount</th>
                               </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-100 text-slate-800">
-                              <tr className="hover:bg-slate-50/60">
+                            <tbody className="divide-y divide-stone-100 text-stone-800">
+                              <tr className="hover:bg-stone-50/60">
                                 <td className="p-2.5 font-medium">Deluxe Accommodation ({selectedOpp.roomsRequired} Rooms)</td>
                                 <td className="p-2.5 text-right font-mono font-bold">₹{(selectedOpp.proposalDetails?.roomRate ?? 0).toLocaleString('en-IN')}</td>
                               </tr>
-                              <tr className="hover:bg-slate-50/60">
+                              <tr className="hover:bg-stone-50/60">
                                 <td className="p-2.5 font-medium">Grand Ballroom & Stage AV Rental</td>
                                 <td className="p-2.5 text-right font-mono font-bold">₹{(selectedOpp.proposalDetails?.hallRental ?? 0).toLocaleString('en-IN')}</td>
                               </tr>
-                              <tr className="hover:bg-slate-50/60">
+                              <tr className="hover:bg-stone-50/60">
                                 <td className="p-2.5 font-medium">Banquet Dining & High-Tea ({selectedOpp.guestCount} Guests)</td>
                                 <td className="p-2.5 text-right font-mono font-bold">₹{(selectedOpp.proposalDetails?.fAndBCost ?? 0).toLocaleString('en-IN')}</td>
                               </tr>
-                              <tr className="hover:bg-slate-50/60">
+                              <tr className="hover:bg-stone-50/60">
                                 <td className="p-2.5 font-medium">GST & Luxury Taxes (18%)</td>
                                 <td className="p-2.5 text-right font-mono font-bold">₹{(selectedOpp.proposalDetails?.taxes ?? 0).toLocaleString('en-IN')}</td>
                               </tr>
@@ -502,14 +502,14 @@ export const SalesAiView: React.FC = () => {
                       </div>
 
                       {/* Notes and Terms */}
-                      <div className="p-3 rounded-lg bg-white border border-slate-200 text-[11px] text-slate-600 space-y-1">
-                        <span className="font-bold text-slate-800 block">Terms & Inclusions:</span>
+                      <div className="p-3 rounded-lg bg-white border border-stone-200 text-[11px] text-stone-600 space-y-1">
+                        <span className="font-bold text-stone-800 block">Terms & Inclusions:</span>
                         <p>{selectedOpp.proposalDetails.specialDiscounts}</p>
                       </div>
 
                       {/* Send Proposal Actions */}
                       <div className="pt-2 flex flex-wrap items-center justify-between gap-2">
-                        <span className="text-[10px] text-slate-500 font-medium">Valid until next week</span>
+                        <span className="text-[10px] text-stone-500 font-medium">Valid until next week</span>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => {
@@ -525,10 +525,10 @@ export const SalesAiView: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="py-12 text-center text-slate-400 bg-slate-50 rounded-xl border border-slate-200 border-dashed">
-                      <FileText className="w-10 h-10 mx-auto text-slate-300 mb-2" />
-                      <p className="text-xs font-bold text-slate-700">No Proposal Generated Yet</p>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Click below to generate a tailored pricing proposal using AI rate cards.</p>
+                    <div className="py-12 text-center text-stone-400 bg-stone-50 rounded-xl border border-stone-200 border-dashed">
+                      <FileText className="w-10 h-10 mx-auto text-stone-300 mb-2" />
+                      <p className="text-xs font-bold text-stone-700">No Proposal Generated Yet</p>
+                      <p className="text-[11px] text-stone-500 mt-0.5">Click below to generate a tailored pricing proposal using AI rate cards.</p>
                       <button
                         onClick={() => handleGenerateProposal(selectedOpp.id)}
                         className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg"

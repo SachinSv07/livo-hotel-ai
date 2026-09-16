@@ -107,30 +107,30 @@ export const LancePadView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Title Header Banner (Tablet-optimized) */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 text-white border border-emerald-800/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-gradient-to-r from-emerald-950 via-stone-900 to-stone-950 text-white border border-emerald-800/40 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
               <Tablet className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight">Livo Pad – Hotel Staff Operations Hub</h1>
+            <h1 className="text-xl font-bold tracking-tight font-['Outfit',sans-serif]">Livo Pad – Hotel Staff Operations Hub</h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
               Tablet Mode
             </span>
           </div>
-          <p className="text-xs text-slate-300 mt-1">
+          <p className="text-xs text-stone-300 mt-1">
             Real-time operations dispatch replacement for walkie-talkies. Accept tasks, track SLAs, and collaborate with staff.
           </p>
         </div>
 
         {/* View Switcher: Kanban vs Team Walkie Talkie */}
-        <div className="flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-2 bg-stone-900/90 p-1.5 rounded-xl border border-stone-800">
           <button
             onClick={() => setActiveTab('board')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'board'
                 ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-400 hover:text-white'
+                : 'text-stone-400 hover:text-white'
             }`}
           >
             <CheckSquare className="w-3.5 h-3.5" />
@@ -142,7 +142,7 @@ export const LancePadView: React.FC = () => {
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'chat'
                 ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-400 hover:text-white'
+                : 'text-stone-400 hover:text-white'
             }`}
           >
             <Radio className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export const LancePadView: React.FC = () => {
 
       {/* Department Filter Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+        <span className="text-xs font-bold text-stone-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
           <Filter className="w-3.5 h-3.5" /> Filter Dept:
         </span>
         {departments.map(dept => (
@@ -162,8 +162,8 @@ export const LancePadView: React.FC = () => {
             onClick={() => setActiveDepartmentFilter(dept)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeDepartmentFilter === dept
-                ? 'bg-slate-900 text-white shadow-xs'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                ? 'bg-stone-900 text-white shadow-xs'
+                : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
             }`}
           >
             {dept}
@@ -175,37 +175,37 @@ export const LancePadView: React.FC = () => {
       {activeTab === 'board' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Column 1: NEW / UNASSIGNED */}
-          <div className="bg-slate-100/70 p-4 rounded-2xl border border-slate-200/80 flex flex-col min-h-[500px]">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
+          <div className="bg-stone-100/70 p-4 rounded-xl border border-stone-200/80 flex flex-col min-h-[500px]">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-200">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                   New / Unassigned ({unassignedTasks.length})
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-slate-500 font-bold">DISPATCHED</span>
+              <span className="text-[10px] font-mono text-stone-500 font-bold">DISPATCHED</span>
             </div>
 
             <div className="space-y-3 flex-1 overflow-y-auto pr-1">
               {unassignedTasks.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-xs">
-                  <CheckCircle2 className="w-8 h-8 mx-auto text-slate-300 mb-1" />
+                <div className="py-12 text-center text-stone-400 text-xs">
+                  <CheckCircle2 className="w-8 h-8 mx-auto text-stone-300 mb-1" />
                   <span>No pending tasks</span>
                 </div>
               ) : (
                 unassignedTasks.map(task => (
                   <div
                     key={task.id}
-                    className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs hover:shadow-xs transition-all space-y-3"
+                    className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs hover:shadow-xs transition-all space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+                      <span className="text-xs font-mono font-bold text-stone-700 bg-stone-100 px-2 py-0.5 rounded">
                         {task.id}
                       </span>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                         task.priority === 'High' || task.priority === 'Urgent'
                           ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' 
-                          : 'bg-slate-100 text-slate-700 border-slate-200'
+                          : 'bg-stone-100 text-stone-700 border-stone-200'
                       }`}>
                         {task.priority} Priority
                       </span>
@@ -213,15 +213,15 @@ export const LancePadView: React.FC = () => {
 
                     <div>
                       <div className="flex items-center gap-1.5 mb-1">
-                        <span className="w-6 h-6 rounded-md bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
+                        <span className="w-6 h-6 rounded-md bg-stone-900 text-white font-bold text-[10px] flex items-center justify-center">
                           {task.roomNumber}
                         </span>
-                        <h4 className="text-xs font-bold text-slate-900 leading-snug">{task.title}</h4>
+                        <h4 className="text-xs font-bold text-stone-900 leading-snug">{task.title}</h4>
                       </div>
-                      <p className="text-[11px] text-slate-600 leading-relaxed">{task.description}</p>
+                      <p className="text-[11px] text-stone-600 leading-relaxed">{task.description}</p>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
                       <span className="font-semibold">{task.department}</span>
                       <span className="font-mono text-amber-700 font-bold flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -251,11 +251,11 @@ export const LancePadView: React.FC = () => {
           </div>
 
           {/* Column 2: IN PROGRESS */}
-          <div className="bg-slate-100/70 p-4 rounded-2xl border border-slate-200/80 flex flex-col min-h-[500px]">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
+          <div className="bg-stone-100/70 p-4 rounded-xl border border-stone-200/80 flex flex-col min-h-[500px]">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-200">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                   In Progress ({inProgressTasks.length})
                 </h3>
               </div>
@@ -264,7 +264,7 @@ export const LancePadView: React.FC = () => {
 
             <div className="space-y-3 flex-1 overflow-y-auto pr-1">
               {inProgressTasks.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-xs">
+                <div className="py-12 text-center text-stone-400 text-xs">
                   <span>No tasks currently in progress</span>
                 </div>
               ) : (
@@ -284,15 +284,15 @@ export const LancePadView: React.FC = () => {
 
                     <div>
                       <div className="flex items-center gap-1.5 mb-1">
-                        <span className="w-6 h-6 rounded-md bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
+                        <span className="w-6 h-6 rounded-md bg-stone-900 text-white font-bold text-[10px] flex items-center justify-center">
                           {task.roomNumber}
                         </span>
-                        <h4 className="text-xs font-bold text-slate-900 leading-snug">{task.title}</h4>
+                        <h4 className="text-xs font-bold text-stone-900 leading-snug">{task.title}</h4>
                       </div>
-                      <p className="text-[11px] text-slate-600 leading-relaxed">{task.description}</p>
+                      <p className="text-[11px] text-stone-600 leading-relaxed">{task.description}</p>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
                       <span>{task.department}</span>
                       <span className="font-mono text-emerald-700 font-bold flex items-center gap-1">
                         <Clock className="w-3 h-3 text-emerald-600" />
@@ -300,7 +300,7 @@ export const LancePadView: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-500">
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-stone-500">
                       <span>Created: {formatTaskTimestamp(task.createdAt)}</span>
                       <span>Accepted: {formatTaskTimestamp(task.acceptedAt)}</span>
                       <span>Remaining: {task.timeRemainingMins ?? task.slaMinutes}m</span>
@@ -310,9 +310,9 @@ export const LancePadView: React.FC = () => {
                     <div className="pt-1">
                       {canPerform(currentUserRole, 'tasks.complete') && <button
                         onClick={() => setCompletingTaskId(task.id)}
-                        className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5"
+                        className="w-full py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5"
                       >
-                        <Check className="w-3.5 h-3.5 text-teal-400" />
+                        <Check className="w-3.5 h-3.5 text-[#CC9A4C]" />
                         <span>Complete & Log Note</span>
                       </button>}
                     </div>
@@ -323,11 +323,11 @@ export const LancePadView: React.FC = () => {
           </div>
 
           {/* Column 3: COMPLETED */}
-          <div className="bg-slate-100/70 p-4 rounded-2xl border border-slate-200/80 flex flex-col min-h-[500px]">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
+          <div className="bg-stone-100/70 p-4 rounded-xl border border-stone-200/80 flex flex-col min-h-[500px]">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-200">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                   Resolved & Verified ({completedTasks.length})
                 </h3>
               </div>
@@ -336,7 +336,7 @@ export const LancePadView: React.FC = () => {
 
             <div className="space-y-3 flex-1 overflow-y-auto pr-1">
               {completedTasks.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-xs">
+                <div className="py-12 text-center text-stone-400 text-xs">
                   <span>No completed tasks yet today</span>
                 </div>
               ) : (
@@ -346,7 +346,7 @@ export const LancePadView: React.FC = () => {
                     className="p-4 rounded-xl bg-white border border-emerald-200/60 shadow-2xs opacity-90 space-y-2.5"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-slate-600">{task.id}</span>
+                      <span className="text-xs font-mono font-bold text-stone-600">{task.id}</span>
                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
                         Resolved in {getTaskDurationMinutes(task) ?? '—'}{getTaskDurationMinutes(task) !== null ? ' mins' : ''}
                       </span>
@@ -354,17 +354,17 @@ export const LancePadView: React.FC = () => {
 
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="w-6 h-6 rounded-md bg-slate-200 text-slate-800 font-bold text-[10px] flex items-center justify-center">
+                        <span className="w-6 h-6 rounded-md bg-stone-200 text-stone-800 font-bold text-[10px] flex items-center justify-center">
                           {task.roomNumber}
                         </span>
-                        <h4 className="text-xs font-bold text-slate-800 line-through decoration-slate-400">{task.title}</h4>
+                        <h4 className="text-xs font-bold text-stone-800 line-through decoration-stone-400">{task.title}</h4>
                       </div>
                       {task.resolution?.notes && (
-                        <p className="text-[11px] text-slate-500 mt-1 italic">"{task.resolution.notes}"</p>
+                        <p className="text-[11px] text-stone-500 mt-1 italic">"{task.resolution.notes}"</p>
                       )}
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-400 flex items-center justify-between">
+                    <div className="pt-2 border-t border-stone-100 text-[10px] text-stone-400 flex items-center justify-between">
                       <span>By: {task.assignedToStaffName}</span>
                       <span>Completed: {formatTaskTimestamp(task.completedAt)}</span>
                     </div>
@@ -378,10 +378,10 @@ export const LancePadView: React.FC = () => {
 
       {/* TAB 2: DEPARTMENT LIVE WALKIE-TALKIE CHAT */}
       {activeTab === 'chat' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white rounded-xl border border-stone-200 shadow-2xs overflow-hidden h-[600px]">
           {/* Channels List (4 Cols) */}
-          <div className="lg:col-span-4 border-r border-slate-200 p-4 space-y-3 bg-slate-50/50">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+          <div className="lg:col-span-4 border-r border-stone-200 p-4 space-y-3 bg-stone-50/50">
+            <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
               Department Radio Channels
             </h3>
             <div className="space-y-1">
@@ -392,7 +392,7 @@ export const LancePadView: React.FC = () => {
                   className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-semibold transition-all text-left ${
                     selectedChannel === ch
                       ? 'bg-emerald-600 text-white font-bold shadow-xs'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                      : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-100'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -400,7 +400,7 @@ export const LancePadView: React.FC = () => {
                     <span>{ch}</span>
                   </div>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                    selectedChannel === ch ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
+                    selectedChannel === ch ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'
                   }`}>
                     {teamMessages.filter(m => m.channelName === ch).length} msgs
                   </span>
@@ -409,16 +409,16 @@ export const LancePadView: React.FC = () => {
             </div>
 
             {/* Staff On Duty */}
-            <div className="pt-4 border-t border-slate-200">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Staff On Duty (Floor 1-5):</span>
+            <div className="pt-4 border-t border-stone-200">
+              <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block mb-2">Staff On Duty (Floor 1-5):</span>
               <div className="space-y-1.5">
                 {staff.filter(s => s.status === 'Available' || s.status === 'Busy').map(s => (
-                  <div key={s.id} className="flex items-center justify-between text-xs p-2 rounded-lg bg-white border border-slate-200">
+                  <div key={s.id} className="flex items-center justify-between text-xs p-2 rounded-lg bg-white border border-stone-200">
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                      <span className="font-semibold text-slate-800">{s.name}</span>
+                      <span className="font-semibold text-stone-800">{s.name}</span>
                     </div>
-                    <span className="text-[10px] text-slate-500">{s.department}</span>
+                    <span className="text-[10px] text-stone-500">{s.department}</span>
                   </div>
                 ))}
               </div>
@@ -428,31 +428,31 @@ export const LancePadView: React.FC = () => {
           {/* Chat Feed (8 Cols) */}
           <div className="lg:col-span-8 flex flex-col h-full">
             {/* Header */}
-            <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+            <div className="p-4 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Radio className="w-4 h-4 text-emerald-600" />
-                <span className="font-bold text-xs text-slate-900 uppercase">Channel {selectedChannel}</span>
+                <span className="font-bold text-xs text-stone-900 uppercase">Channel {selectedChannel}</span>
               </div>
-              <span className="text-[10px] text-slate-500">Broadcasting to on-duty tablets</span>
+              <span className="text-[10px] text-stone-500">Broadcasting to on-duty tablets</span>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-stone-50/30">
               {filteredTeamMessages.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 text-xs">
+                <div className="py-12 text-center text-stone-400 text-xs">
                   <span>No recent transmissions in this channel</span>
                 </div>
               ) : (
                 filteredTeamMessages.map(msg => (
                   <div
                     key={msg.id}
-                    className="p-3 rounded-xl max-w-md text-xs space-y-1 bg-white border border-slate-200 text-slate-800 mr-auto"
+                    className="p-3 rounded-xl max-w-md text-xs space-y-1 bg-white border border-stone-200 text-stone-800 mr-auto"
                   >
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-bold flex items-center gap-1 text-slate-900">
+                      <span className="font-bold flex items-center gap-1 text-stone-900">
                         {msg.staffName} ({msg.staffDepartment})
                       </span>
-                      <span className="text-slate-400">{msg.timestamp}</span>
+                      <span className="text-stone-400">{msg.timestamp}</span>
                     </div>
                     <p className="leading-relaxed">{msg.message}</p>
                   </div>
@@ -461,13 +461,13 @@ export const LancePadView: React.FC = () => {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSendMessage} className="p-3 border-t border-slate-200 bg-white flex gap-2">
+            <form onSubmit={handleSendMessage} className="p-3 border-t border-stone-200 bg-white flex gap-2">
               <input
                 type="text"
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 placeholder={`Post update to ${selectedChannel}...`}
-                className="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+                className="flex-1 text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
               />
               <button
                 type="submit"
@@ -482,32 +482,32 @@ export const LancePadView: React.FC = () => {
 
       {/* Resolution Note Modal */}
       {completingTaskId && (
-        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-slate-950/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center bg-stone-950/70 backdrop-blur-xs">
+          <div className="relative w-full max-w-md bg-white border border-stone-200 rounded-xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-sm font-bold text-slate-900">Complete Task {completingTaskId}</h3>
+                <h3 className="text-sm font-bold text-stone-900">Complete Task {completingTaskId}</h3>
               </div>
-              <button onClick={() => setCompletingTaskId(null)} className="text-slate-400 hover:text-slate-700">✕</button>
+              <button onClick={() => setCompletingTaskId(null)} className="text-stone-400 hover:text-stone-700">✕</button>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              <label className="block text-xs font-bold text-stone-700 uppercase mb-1">
                 Resolution Notes (Logged to Oracle Opera PMS & Guest WhatsApp):
               </label>
               <textarea
                 value={completionNote}
                 onChange={e => setCompletionNote(e.target.value)}
                 rows={3}
-                className="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:ring-1 focus:ring-emerald-500"
+                className="w-full text-xs p-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-900 focus:bg-white focus:ring-1 focus:ring-emerald-500"
               />
             </div>
 
             <div className="flex justify-end gap-2 pt-2">
               <button
                 onClick={() => setCompletingTaskId(null)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs"
+                className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold rounded-lg text-xs"
               >
                 Cancel
               </button>
