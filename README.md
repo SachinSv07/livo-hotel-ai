@@ -291,6 +291,6 @@ These are deployment requirements, not claims that every item is already impleme
 
 - Sachin S V
 - Dharshan 
----
+----
 
 LIVO — Connecting guest experiences with hotel operations.
